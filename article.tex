@@ -53,15 +53,15 @@
 
 \begin{abstract}
 The goal of resting-state functional magnetic resonance imaging (fMRI) is to investigate the brain's functional connections by using the temporal similarity between blood oxygenation level dependent (BOLD) signals in different regions of the brain “at rest” as an indicator of synchronous neural activity.
-However having different images of patients brain despite the sequential time based information, may contain enough data to investigate their brain and enable us to recognize some diseases.
-In this paper, we propose a novel method to automatically extract these non time sequence base information using a Bayesian deep learning algorithm based on convolutional neural network.
+However having different images of patients' brains despite the sequential time based information, may contain enough data to investigate their brains and enables us to recognize some diseases.
+In this paper, we propose a novel method to automatically extract these non time sequence based information using a Bayesian deep learning algorithm based on convolutional neural network (CNN).
 Instead of using some predefined points of interest (POIs) we use the whole data in training phase so those points of the brain which do not contain related information about the disease will be ignored automatically by the trained model.
-Moreover this method do not takes any assumptions based on disease, patients, etc.,
+Moreover this method does not take any assumptions about disease, patients, etc.,
 makes it a possible universal disease diagnosis approach to differentiate diseases having an impact on brain functionality.
-This method is a supervised algorithm with small amount of calculations based on three dimensional convolutional network .
+This method is a supervised algorithm with small amount of calculations using three dimensional CNN.
 Each fMRI scan (which contains {\it t} time slices of brain) of patients will divided into {\it t} different 3D images enabling us to make our dataset much bigger in number and calculations way simpler.
-Subsequently all of these image are fed to a network similar to LeNet-5 (but in three dimensions) to train our model.
-Then to determine if a person is suffering from Parkinson's or not, we test his/her {\it t} fMRI images and get {\it t} different results which leads to a fraction (probability) of how healthy his/her brain is and if that fraction is above 0.5 we can classify that sample as Parkinson's patient.
+Subsequently all of these image are fed to a Bayesian network similar to LeNet-5 (but in three dimensions) to train our model.
+Then to determine if a person is suffering from Parkinson's or not, we test his/her {\it t} fMRI images and get {\it t} different results which leads to a fraction (probability) of how unhealthy his/her brain is and if that fraction is above 0.5 we can classify that sample as a Parkinson's patient.
 \end{abstract}
 
 
