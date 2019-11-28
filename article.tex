@@ -23,6 +23,7 @@
 %\usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers]{natbib}
+\usepackage{mathpazo}
 
 \input{mymacros.tex}
 
@@ -52,31 +53,32 @@
 \cortext[cor1]{Corresponding author}
 
 \begin{abstract}
-The goal of resting-state functional magnetic resonance imaging (fMRI) is to investigate the brain's functional connections by using the temporal similarity between blood oxygenation level dependent (BOLD) signals in different regions of the brain “at rest” as an indicator of synchronous neural activity.
-However having different images of patients' brains despite the sequential time based information, may contain enough data to investigate their brains and enables us to recognize some diseases.
-In this paper, we propose a novel method to automatically extract these non time sequence based information using a Bayesian deep learning algorithm based on convolutional neural network (CNN).
-Instead of using some predefined points of interest (POIs) we use the whole data in training phase so those points of the brain which do not contain related information about the disease will be ignored automatically by the trained model.
-Moreover this method does not take any assumptions about disease, patients, etc.,
+The goal of resting-state functional magnetic resonance imaging (fMRI) is to investigate the brain's functional connections by using the temporal similarity between blood oxygenation level-dependent (BOLD) signals in different regions of the brain “at rest” as an indicator of synchronous neural activity.
+However having different images of patients' brains despite the sequential time-based information, may contain enough data to investigate their brains and enables us to recognize some diseases.
+In this paper, we propose a novel method to automatically extract this non-time sequence-based information using a Bayesian deep learning algorithm based on a convolutional neural network (CNN).
+Instead of using some predefined points of interest (POIs) we use the whole data in the training phase so those points of the brain which do not contain related information about the disease will be ignored automatically by the trained model.
+Moreover, this method does not make any assumptions about the disease, patients, etc.,
 makes it a possible universal disease diagnosis approach to differentiate diseases having an impact on brain functionality.
-This method is a supervised algorithm with small amount of calculations using three dimensional CNN.
-Each fMRI scan (which contains {\it t} time slices of brain) of patients will divided into {\it t} different 3D images enabling us to make our dataset much bigger in number and calculations way simpler.
-Subsequently all of these image are fed to a Bayesian network similar to LeNet-5 (but in three dimensions) to train our model.
+This method is a supervised algorithm with a small number of calculations using three-dimensional CNN.
+Each fMRI scan (which contains {\it t} time slices of the brain) of patients will be divided into {\it t} different 3D images enabling us to make the dataset much bigger in number and calculations way simpler.
+Subsequently, all of these images are fed to a Bayesian network similar to LeNet-5 (but in three dimensions) to train our model.
 Then to determine if a person is suffering from Parkinson's or not, we test his/her {\it t} fMRI images and get {\it t} different results which leads to a fraction (probability) of how unhealthy his/her brain is and if that fraction is above 0.5 we can classify that sample as a Parkinson's patient.
 \end{abstract}
 
 
-\begin{highlights}
-\item Research highlights item 1
-\item Research highlights item 2
-\item Research highlights item 3
-\end{highlights}
+%\begin{highlights}
+%\item High accuracy with 
+%\item Research highlights item 2
+%\item Research highlights item 3
+%\end{highlights}
 
 \begin{keywords}
 Functional magnetic resonance imaging (fMRI) \sep
 Resting-state \sep
 Disease diagnosis \sep
 Bayesian deep learning \sep
-Convolutional neural network (CNN)
+Convolutional neural network (CNN) \sep
+Parkinson's disease
 \end{keywords}
 
 
@@ -84,244 +86,21 @@ Convolutional neural network (CNN)
 
 \section{Introduction}
 
-The Elsevier cas-dc class is based on the
-standard article class and supports almost all of the functionality of
-that class. In addition, it features commands and options to format the
-\begin{itemize} \item document style \item baselineskip \item front
-matter \item keywords and MSC codes \item theorems, definitions and
-proofs \item lables of enumerations \item citation style and labeling.
-\end{itemize}
+Intro
 
-This class depends on the following packages
-for its proper functioning:
-
-\begin{enumerate}
-\itemsep=0pt
-\item {natbib.sty} for citation processing;
-\item {geometry.sty} for margin settings;
-\item {fleqn.clo} for left aligned equations;
-\item {graphicx.sty} for graphics inclusion;
-\item {hyperref.sty} optional packages if hyperlinking is
-  required in the document;
-\end{enumerate}  
-
-All the above packages are part of any
-standard \LaTeX{} installation.
-Therefore, the users need not be
-bothered about downloading any extra packages.
-
-\section{Installation}
-
-The package is available at author resources page at Elsevier
-(\url{http://www.elsevier.com/locate/latex}).
-The class may be moved or copied to a place, usually,\linebreak
-\verb+$TEXMF/tex/latex/elsevier/+, %$%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-or a folder which will be read                   
-by \LaTeX{} during document compilation.  The \TeX{} file
-database needs updation after moving/copying class file.  Usually,
-we use commands like \verb+mktexlsr+ or \verb+texhash+ depending
-upon the distribution and operating system.
-
-\section{Front matter}
-
-The author names and affiliations could be formatted in two ways:
-\begin{enumerate}[(1)]
-\item Group the authors per affiliation.
-\item Use footnotes to indicate the affiliations.
-\end{enumerate}
-See the front matter of this document for examples. 
-You are recommended to conform your choice to the journal you 
-are submitting to.
-
-\section{Bibliography styles}
-
-There are various bibliography styles available. You can select the
-style of your choice in the preamble of this document. These styles are
-Elsevier styles based on standard styles like Harvard and Vancouver.
-Please use Bib\TeX\ to generate your bibliography and include DOIs
-whenever available.
-
-Here are two sample references: 
-\cite{Calhoun2016}
-\cite{Phan2002,Murphy2013}
-\cite{Sarraf2016,Lecun1995,Calhoun2004,Gal2016,UsaToday,OpenFmri,Handwerker2012}
-
-\section{Floats}
-{Figures} may be included using the command,\linebreak 
-\verb+\includegraphics+ in
-combination with or without its several options to further control
-graphic. \verb+\includegraphics+ is provided by {graphic[s,x].sty}
-which is part of any standard \LaTeX{} distribution.
-{graphicx.sty} is loaded by default. \LaTeX{} accepts figures in
-the postscript format while pdf\LaTeX{} accepts {*.pdf},
-{*.mps} (metapost), {*.jpg} and {*.png} formats. 
-pdf\LaTeX{} does not accept graphic files in the postscript format. 
+\section{Materials and methods}
 
 
+\subsection{Participants}
+We had 30 subjects with ACER over 85 and MMSE over 27, comprising 15 healthy controls \texttt{[HC, age 63.33 ± 5.25, 8 females ]}
+and 15 patients diagnosed with Parkinson's disease  \texttt{[PD, age 70.73 ± 4.80, 8 females ]}.
+Significant differences in age and ACER among two groups were found \texttt{(age: p=0.0012 , ACER: p=0.015)}. However no significant difference in MMSE were found \texttt{(MMSE: p=0.315)}.
 
-The \verb+table+ environment is handy for marking up tabular
-material. If users want to use {multirow.sty},
-{array.sty}, etc., to fine control/enhance the tables, they
-are welcome to load any package of their choice and
-{cas-dc.cls} will work in combination with all loaded
-packages.
+\subsection{Data acquisition}
+fMRI scans were obtained from the OpenfMRI project which were acquired on a 3T Siemens Verio with repetition time (TR) = 2.5 s, echo time (TE) = 30ms, flip angle = 80°. Each sample contains 198 slices of 39×64×64 voxels from the brains of patients. Subjects were instructed to close their eyes and to rest quietly during the scan session \cite{OpenFmri}.
 
-\begin{table}[width=.9\linewidth,cols=4,pos=h]
-\caption{This is a test caption. This is a test caption. This is a test
-caption. This is a test caption.}\label{tbl1}
-\begin{tabular*}{\tblwidth}{@{} LLLL@{} }
-\toprule
-Col 1 & Col 2 & Col 3 & Col4\\
-\midrule
-12345 & 12345 & 123 & 12345 \\
-12345 & 12345 & 123 & 12345 \\
-12345 & 12345 & 123 & 12345 \\
-12345 & 12345 & 123 & 12345 \\
-12345 & 12345 & 123 & 12345 \\
-\bottomrule
-\end{tabular*}
-\end{table}
-
-\section[Theorem and ...]{Theorem and theorem like environments}
-
-{cas-dc.cls} provides a few shortcuts to format theorems and
-theorem-like environments with ease. In all commands the options that
-are used with the \verb+\newtheorem+ command will work exactly in the same
-manner. {cas-dc.cls} provides three commands to format theorem or
-theorem-like environments: 
-
-\begin{verbatim}
- \newtheorem{theorem}{Theorem}
- \newtheorem{lemma}[theorem]{Lemma}
- \newdefinition{rmk}{Remark}
- \newproof{pf}{Proof}
- \newproof{pot}{Proof of Theorem \ref{thm2}}
-\end{verbatim}
-
-
-The \verb+\newtheorem+ command formats a
-theorem in \LaTeX's default style with italicized font, bold font
-for theorem heading and theorem number at the right hand side of the
-theorem heading.  It also optionally accepts an argument which
-will be printed as an extra heading in parentheses. 
-
-\begin{verbatim}
-  \begin{theorem} 
-   For system (8), consensus can be achieved with 
-   $\|T_{\omega z}$ ...
-     \begin{eqnarray}\label{10}
-     ....
-     \end{eqnarray}
-  \end{theorem}
-\end{verbatim}  
-
-
-\newtheorem{theorem}{Theorem}
-
-\begin{theorem}
-For system (8), consensus can be achieved with 
-$\|T_{\omega z}$ ...
-\begin{eqnarray}\label{10}
-....
-\end{eqnarray}
-\end{theorem}
-
-The \verb+\newdefinition+ command is the same in
-all respects as its \verb+\newtheorem+ counterpart except that
-the font shape is roman instead of italic.  Both
-\verb+\newdefinition+ and \verb+\newtheorem+ commands
-automatically define counters for the environments defined.
-
-The \verb+\newproof+ command defines proof environments with
-upright font shape.  No counters are defined. 
-
-
-\section[Enumerated ...]{Enumerated and Itemized Lists}
-{cas-dc.cls} provides an extended list processing macros
-which makes the usage a bit more user friendly than the default
-\LaTeX{} list macros.   With an optional argument to the
-\verb+\begin{enumerate}+ command, you can change the list counter
-type and its attributes.
-
-\begin{verbatim}
- \begin{enumerate}[1.]
- \item The enumerate environment starts with an optional
-   argument `1.', so that the item counter will be suffixed
-   by a period.
- \item You can use `a)' for alphabetical counter and '(i)' 
-  for roman counter.
-  \begin{enumerate}[a)]
-    \item Another level of list with alphabetical counter.
-    \item One more item before we start another.
-    \item One more item before we start another.
-    \item One more item before we start another.
-    \item One more item before we start another.
-\end{verbatim}
-
-Further, the enhanced list environment allows one to prefix a
-string like `step' to all the item numbers.  
-
-\begin{verbatim}
- \begin{enumerate}[Step 1.]
-  \item This is the first step of the example list.
-  \item Obviously this is the second step.
-  \item The final step to wind up this example.
- \end{enumerate}
-\end{verbatim}
-
-\section{Cross-references}
-In electronic publications, articles may be internally
-hyperlinked. Hyperlinks are generated from proper
-cross-references in the article.  For example, the words
-\textcolor{black!80}{Fig.~1} will never be more than simple text,
-whereas the proper cross-reference \verb+\ref{tiger}+ may be
-turned into a hyperlink to the figure itself:
-\textcolor{blue}{Fig.~1}.  In the same way,
-the words \textcolor{blue}{Ref.~[1]} will fail to turn into a
-hyperlink; the proper cross-reference is \verb+\cite{Knuth96}+.
-Cross-referencing is possible in \LaTeX{} for sections,
-subsections, formulae, figures, tables, and literature
-references.
-
-\section{Bibliography}
-
-Two bibliographic style files (\verb+*.bst+) are provided ---
-{model1-num-names.bst} and {model2-names.bst} --- the first one can be
-used for the numbered scheme. This can also be used for the numbered
-with new options of {natbib.sty}. The second one is for the author year
-scheme. When  you use model2-names.bst, the citation commands will be
-like \verb+\citep+,  \verb+\citet+, \verb+\citealt+ etc. However when
-you use model1-num-names.bst, you may use only \verb+\cite+ command.
-
-\verb+thebibliography+ environment.  Each reference is a\linebreak
-\verb+\bibitem+ and each \verb+\bibitem+ is identified by a label,
-by which it can be cited in the text:
-
-\noindent In connection with cross-referencing and
-possible future hyperlinking it is not a good idea to collect
-more that one literature item in one \verb+\bibitem+.  The
-so-called Harvard or author-year style of referencing is enabled
-by the \LaTeX{} package {natbib}. With this package the
-literature can be cited as follows:
-
-\begin{enumerate}[\textbullet]
-\item Parenthetical: \verb+\citep{WB96}+ produces (Wettig \& Brown, 1996).
-\item Textual: \verb+\citet{ESG96}+ produces Elson et al. (1996).
-\item An affix and part of a reference:\break
-\verb+\citep[e.g.][Ch. 2]{Gea97}+ produces (e.g. Governato et
-al., 1997, Ch. 2).
-\end{enumerate}
-
-In the numbered scheme of citation, \verb+\cite{<label>}+ is used,
-since \verb+\citep+ or \verb+\citet+ has no relevance in the numbered
-scheme.  {natbib} package is loaded by {cas-dc} with
-\verb+numbers+ as default option.  You can change this to author-year
-or harvard scheme by adding option \verb+authoryear+ in the class
-loading command.  If you want to use more options of the {natbib}
-package, you can do so with the \verb+\biboptions+ command.  For
-details of various options of the {natbib} package, please take a
-look at the {natbib} documentation, which is part of any standard
-\LaTeX{} installation.
+\subsection{Data pre-processing}
+The fMRI data were pre-processed using the standard modules of FMRIB Software Library v5.0 \cite{FMRIB}. The pre-processing steps for the anatomical data involved motion correction (MCFLRIT), skull stripping, and spatial smoothing (Gaussian kernel of 5-mm FWHM). Low level noise was removed using a high-pass temporal filtering. The functional images were then aligned to the individual's high-resolution T1-weighted scans, which were subsequently registered to the Montreal Neurological Institute standard space (MNI152) using affine linear registration. and resampled at 2mm cubic voxels. The product of preprocessing step was used in the experiments.
 
 \appendix
 \section{My Appendix}
