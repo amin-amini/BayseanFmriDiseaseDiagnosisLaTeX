@@ -23,6 +23,7 @@
 %\usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers]{natbib}
+\usepackage{amsmath}
 %\usepackage{mathpazo}
 
 \input{mymacros.tex}
@@ -134,6 +135,64 @@ Take medical diagnosis as an example. Besides seeing
 visible symptoms (or medical images from MRI) and hearing descriptions from patients, a doctor has to look for relations among all the symptoms and preferably infer the corresponding etiology. Only after that can the doctor provide medical advice for the patients. In this example, although the abilities of seeing and hearing allow the doctor to acquire information from the patients, it is the thinking part that defines a doctor. Specifically, the ability of thinking here could involve causal inference, logic deduction, and dealing with uncertainty, which is apparently beyond the capability of conventional deep learning methods \cite{Wang2016}.
 
 A neural network with arbitrary depth and non-linearities, with dropout applied before every weight layer, is mathematically equivalent to an approximation to the probabilistic deep Gaussian process \cite{Gal2016}.
+
+Let $\hat{y}$ be the output of a NN model with $L$ layers and a loss function {\it E(·, ·)} such as the softmax loss or the Euclidean loss (square loss).We denote by $W_i$ the NN’s weight matrices of dimensions $K_i \times K_{i-1}$, and by $b_i$ the bias vectors of dimensions $K_i$ for each layer $i = 1, ..., L$. We denote by $y_i$ the observed output corresponding to input $x_i$ for $1 \leq i \leq N$ data points, and the input and output sets as $X, Y$. During NN optimization a regularization term is often added. We often use $L2$ regularization weighted by some weight decay $\lambda$, resulting in a minimization objective (often referred to as cost) and it can written as Equation  \eqref{eq:bayesianCnnDroupout} \cite{Gal2016}.
+
+\begin{equation}
+\mathcal{L}_{dropout} := 
+    {1 \over N} \sum_{i=1}^{N} E(y_i , \hat{y_i}) + \\
+    \lambda \sum_{i=1}^{L} ( \left|\left| W_i \right|\right|_2^2 + \left|\left| b_i \right|\right|_2^2 )
+\label{eq:bayesianCnnDroupout} 
+\end{equation}
+
+Now of if we add dropout to the calculations each unit may remain the same with probability $p_i$ or dropped out (its value is set to zero). We use the same values in the backward pass propagating the derivatives to the parameters. Assume we are given a covariance function of the form of Equation \eqref{eq:nnCovariance}.
+
+\begin{equation}
+K(x, y) = \int p(w)p(b) \sigma (w^T x + b) \sigma (w^T y + b) dw db
+\label{eq:nnCovariance}
+\end{equation}
+
+with some element-wise non-linearity {\it $\sigma$(·)} and distributions $p(w), p(b)$. It had been shown that a deep Gaussian process with L layers and covariance function $K(x,y)$ can be approximated by placing a variational distribution over each component of a spectral decomposition of the GPs’ covariance functions.
+
+Let $W_i$ be a random matrix of dimensions $K \times K_{i-1}$ for each layer $i$, and write
+$\omega = \{ W_i \}^L_{i=1}$. A priori,we let each row of $W_i$ distribute according to the $p(W)$ above. In addition, assume vectors $m_i$ of dimensions $K_i$ for each GP layer. The predictive probability of the deep GP model given some precision parameter $\tau > 0$ can be parameterized as Equation \eqref{eq:gpPriority}.
+
+\begin{eqnarray}
+\label{eq:gpPriority}
+p(y | x,X,Y) = \int p(y|x,\omega) p(\omega|X,Y)d\omega \\ 
+p(y|x,\omega) = \mathcal{N} (y ; \hat{y} (x,\omega) , \tau^{-1} I_D )  \nonumber \\
+\hat{y} (x, \omega = \{ W_1, ..., W_L \}) =  \nonumber \\
+\sqrt{1 \over K_L} W_L \sigma( ...  \sqrt{1 \over K_1} W_2 \sigma( W_1 x + m_1 ) ... )  \nonumber
+\end{eqnarray}
+
+The posterior distribution $p(\omega|X,Y)$ in Equation \eqref{eq:gpPriority} is intractable. It had been shown that if we use a distribution over matrices whose columns are randomly set to zero, we can recover Equation \eqref{eq:bayesianCnnDroupout} \cite{Gal2016}. Note that previously mentioned distribution $q(\omega)$ can be defined as:
+
+\begin{eqnarray}
+W_i &=& M_i \cdot diag([ z_{i,j} ]^{K_i}_{j=1} ) \nonumber \\ 
+z_{i,j} &=& Bernoulli(p_i) \; \forall \; 1 \le i \le L \; , \; 1 \le j \le K_{i-1} \nonumber
+\end{eqnarray}
+\newline
+given some probabilities $p_i$ and matrices $M_i$ as variational parameters. The variable $z_{i,j} = 0$ corresponds then to unit $j$ in layer $i-1$ being dropped out as an input to layer $i$. Subsequently if we use a dropout in 3D convolutional neural network, it would be a practice of Bayesian 3D CNN.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \appendix
 \section{My Appendix}
