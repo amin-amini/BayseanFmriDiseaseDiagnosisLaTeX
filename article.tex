@@ -24,6 +24,7 @@
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers]{natbib}
 \usepackage{amsmath}
+\usepackage{algorithm2e}
 %\usepackage{mathpazo}
 
 \input{mymacros.tex}
@@ -211,6 +212,11 @@ Without a doubt, fMRI scans are nothing but spatial and temporal connectivities.
 
 
 In order to conquer the mentioned downsides of a conventional CNN in Parkinson's disease diagnosis, we will introduce our method which keeps spatial information and can overcome overfitting by reducing model variance. To do so, the proposed algorithm will keep the $z$ index of data and feed them into a 3D Bayesian CNN. As discussed in Section \ref{section:bayesianDL} if we add dropouts before each convolution layer, our model will turn into a deep Bayesian convolutional neural network that can avoid overfitting. Dropouts remove some units (by setting their output values to zero) temporarily which enables other units to justify their weights. Consequently, remaining units in the training phase can precisely adjust their weights to more appropriate ranges if they already hold acceptable values, or keep away from unwanted boundaries noticeably if needed. In addition to that, Bayesian networks are dramatically less compute-intensive and can solve problems in even a single epoch. Hence, a mid-end CPU can be used instead of a high-end GPU in experiments.
+
+As we meant to put temporal data aside, we can assume that the fMRI data for each participant is $t$ different 3D images we had obtained from their brain (despite its time-based sequences). Correspondingly this assumption will multiply our dataset samples by $t (=198)$, enabling us to train our model faster and escape overfitting. On the other hand, in the test phase, our model won't just give binary predictions about a participant being a Parkinson's patient or a healthy control, but it can give us an approximation about the probability of a person being healthy or not. In this step, the trained network will give $t$ different predictions for each person (based on $t$ images) providing a ratio, which corresponds to a probability of healthiness, and we can set a criterion (like $0.5$) to decide if someone belongs to HC class or not.
+
+
+
 
 
 
