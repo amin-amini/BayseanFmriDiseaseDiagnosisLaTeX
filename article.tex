@@ -89,7 +89,14 @@ Parkinson's disease
 
 Intro
 
+
+
+
+
 \section{Materials and methods}
+
+
+
 
 
 \subsection{Participants}
@@ -98,10 +105,12 @@ and 15 patients diagnosed with Parkinson's disease  \texttt{[PD, age 70.73 ± 4.
 Significant differences in age and ACER among two groups were found \texttt{(age: p=0.0012 , ACER: p=0.015)}. However no significant difference in MMSE were found \texttt{(MMSE: p=0.315)}.
 
 \subsection{Data acquisition}
-fMRI scans were obtained from the OpenfMRI project which was acquired on a 3T Siemens Verio with repetition time (TR) = 2.5 s, echo time (TE) = 30ms, flip angle = 80°. Each sample contains 198 slices of 39$\times$64$\times$64 voxels from the brains of patients. Subjects were instructed to close their eyes and to rest quietly during the scan session \cite{OpenFmri}.
+fMRI scans were obtained from the OpenfMRI project which was acquired on a 3T Siemens Verio with repetition time (TR) = 2.5 s, echo time (TE) = 30ms, flip angle = 80°. Each sample contains 198 slices of $39 \times 64 \times 64$ voxels from the brains of patients. Subjects were instructed to close their eyes and to rest quietly during the scan session \cite{OpenFmri}.
 
 \subsection{Data pre-processing}
 The fMRI data were pre-processed using the standard modules of FMRIB Software Library v5.0 \cite{FMRIB}. The pre-processing steps for the anatomical data involved motion correction (MCFLRIT), skull stripping, and spatial smoothing (Gaussian kernel of 5-mm FWHM). Low level noise was removed using a high-pass temporal filtering. The functional images were then aligned to the individual's high-resolution T1-weighted scans, which were subsequently registered to the Montreal Neurological Institute standard space (MNI152) using affine linear registration. and resampled at 2mm cubic voxels. The product of the preprocessing step was used in the experiments.
+
+
 
 \subsection{Three dimensional convolutional neural networks}
 3D Convolutional Neural Networks which are inspired by human visual system are similar to classic neural networks. This architecture has been particularly designed based on the explicit assumption that raw data are three-dimensional that enables us to encode certain properties and also to reduce the amount of hyper parameters. The CNN topology utilizes spatial relationships to reduce the number of parameters which must be learned and thus improves upon general feed-forward back propagation training. Equation \eqref{eq:CnnVal} shows how value of each voxel is calculated from previous layer based on a fixed kernel \texttt{(size = P$\times$Q$\times$R)} and a bias for \texttt{j}th feature in \texttt{i}th layers where v is value, f is the activation function and w is filter weight \cite{Ji2013}.
@@ -126,6 +135,9 @@ Since fMRI images are 3D time series and our experiment tries to find out if ima
 	\caption{3D CNN demonstration (kernel size = 3$\times$3$\times$3).}
 	\label{fig:CnnSample}
 \end{figure}
+
+
+
 
 \subsection{Bayesian deep learning}
 Deep learning has achieved significant success in many perception tasks including seeing (visual object recognition), reading (text understanding), and hearing (speech recognition). These are undoubtedly fundamental tasks for a functioning comprehensive artificial intelligence (AI) or data engineering (DE) system. However, in order to build a real AI/DE system, simply being able to see, read, and hear is far from enough. It should master
@@ -178,10 +190,18 @@ given some probabilities $p_i$ and matrices $M_i$ as variational parameters. The
 
 
 
+\subsection{Proposed method}
+
+As mentioned before, our experiment aims to find out if fMRI scans carry any hidden information without taking time-based sequences in action. Accordingly, we examined some previous researches in this field and an eye-catching example of this glance is Sarraf and Tofighi's adopted LeNet-5 architecture \cite{Sarraf2016}. Their algorithm concatenates fMRI images based on $z$ and $t$ axis and does not make any assumptions about the disease or the data (except their unknown patient selection criteria), making it a potential applicable solution to different disease diagnosis tasks. In brief, each patient's scan is presented as a huge two-dimensional matrix which is then fed to a CNN network. Although this method has shown huge success in the case of Alzheimer's (based on large ADNI dataset), our experiments clarify that it is not suitable for Parkinson's disease diagnosis with a small dataset (such as OpenfMRI ds000245). In addition to that, Sarraf and Tofighi's method consumes a huge amount of memory and demands a powerful processor due to its large dimensions of data.
+
+Without a doubt, fMRI scans are nothing but spatial and temporal connectivities. As we aim to focus on spatial relations and put temporal ones aside, our algorithm must try to keep all of that information in calculations. Besides, Sarraf and Tofighi's method loses a lot of these connectivities by flattening data toward the $z$ axis. In addition to that, the mentioned data conversion will increase our model complexity and variance, especially in a case like Parkinson's disease dataset. In fact, by resizing 198 slices of $39 \times 64 \times 64$ voxels to a 2D $2496 \times 12672$ pixels, we are adding a lot of unnecessarily and incorrect spatial connectivities based on the $t$ axis and losing some important ones in the $z$ axis by misplacing them. As a result, it is predictable that flattening algorithm may lead to overfitting and compute-intensive calculations which can be seen in Figure \ref{fig:SarrafParkinsonTestResult}.
 
 
-
-
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/SarrafParkinsonTestResult}
+	\caption{Parkinson's disease diagnosis accuracy and loss using Sarraf and Tofighi's algorithm.}
+	\label{fig:SarrafParkinsonTestResult}
+\end{figure}
 
 
 
