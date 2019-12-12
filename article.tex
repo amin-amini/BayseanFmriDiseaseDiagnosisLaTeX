@@ -24,7 +24,13 @@
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers]{natbib}
 \usepackage{amsmath}
+
 \usepackage{algorithm2e}
+\usepackage[noend]{algcompatible}
+\newcommand{\algorithmicinput}{\textbf{input}}
+\newcommand{\INPUT}{\item[\algorithmicinput]}
+
+\usepackage{textcomp}
 %\usepackage{mathpazo}
 
 \input{mymacros.tex}
@@ -105,7 +111,7 @@ Intro
 \label{section:participants}
 We had 30 subjects with ACER over 85 and MMSE over 27, comprising 15 healthy controls \texttt{[HC, age 63.33 ± 5.25, 8 females ]}
 and 15 patients diagnosed with Parkinson's disease  \texttt{[PD, age 70.73 ± 4.80, 8 females ]}.
-Significant differences in age and ACER among two groups were found \texttt{(age: p=0.0012 , ACER: p=0.015)}. However no significant difference in MMSE were found \texttt{(MMSE: p=0.315)}.
+Significant differences in age and ACER aong two groups were found \texttt{(age: p=0.0012 , ACER: p=0.015)}. However no significant difference in MMSE were found \texttt{(MMSE: p=0.315)}.
 
 \subsection{Data acquisition}
 \label{section:data}
@@ -214,6 +220,44 @@ Without a doubt, fMRI scans are nothing but spatial and temporal connectivities.
 In order to conquer the mentioned downsides of a conventional CNN in Parkinson's disease diagnosis, we will introduce our method which keeps spatial information and can overcome overfitting by reducing model variance. To do so, the proposed algorithm will keep the $z$ index of data and feed them into a 3D Bayesian CNN. As discussed in Section \ref{section:bayesianDL} if we add dropouts before each convolution layer, our model will turn into a deep Bayesian convolutional neural network that can avoid overfitting. Dropouts remove some units (by setting their output values to zero) temporarily which enables other units to justify their weights. Consequently, remaining units in the training phase can precisely adjust their weights to more appropriate ranges if they already hold acceptable values, or keep away from unwanted boundaries noticeably if needed. In addition to that, Bayesian networks are dramatically less compute-intensive and can solve problems in even a single epoch. Hence, a mid-end CPU can be used instead of a high-end GPU in experiments.
 
 As we meant to put temporal data aside, we can assume that the fMRI data for each participant is $t$ different 3D images we had obtained from their brain (despite its time-based sequences). Correspondingly this assumption will multiply our dataset samples by $t (=198)$, enabling us to train our model faster and escape overfitting. On the other hand, in the test phase, our model won't just give binary predictions about a participant being a Parkinson's patient or a healthy control, but it can give us an approximation about the probability of a person being healthy or not. In this step, the trained network will give $t$ different predictions for each person (based on $t$ images) providing a ratio, which corresponds to a probability of healthiness, and we can set a criterion (like $0.5$) to decide if someone belongs to HC class or not.
+
+
+Proposed method can be briefly expressed as Algorithm \ref{alg:preprocessing}.
+
+\begin{algorithm}
+	\caption{data preparation}
+	\label{alg:preprocessing}
+	\begin{algorithmic}
+		\INPUT{raw fMRI images}
+		\STATE 
+		\STATE For each fMRI scan following pre-processing steps had been done.
+		\STATE 
+		
+		\item{\textbf{1.}} Intra-modal motion correction using \textbf{MCFLIRT}. it loads the time-series in its entirity and will default to the middle volume as an initial template image. A coarse 8mm search for the motion parameters is then carried out using the cost function specified followed by two subsequent searches at 4mm using increasingly tighter tolerances. All optimizations use trilinear interpolation.
+		\STATE 
+		
+		\item{\textbf{2.}} \textbf{Skull stripping} using BET. Brain Extraction Tool deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1 and T2 input images.
+		\STATE 
+		
+		\item{\textbf{3.}} \textbf{Spatial Smoothing} via Full-Width at half maximum (FWHM) with 5mm range which is carried out on each volume of the FMRI data set separately. This is intended to reduce noise without reducing valid activation; this is successful as long as the underlying activation area is larger than the extent of the smoothing.
+		\STATE 
+		
+		\item{\textbf{4.}} \textbf{Highpass temporal filtering} uses a local fit of a straight line (Gaussian-weighted within the line to give a smooth response) to remove low frequency artifacts. Low level noises were removed using this filter with $t = 90 sec$.
+		\STATE 
+		
+		\item{\textbf{5.}} The functional images were then aligned to the individual's high-resolution T1-weighted scans, which were subsequently registered to the \textbf{Montreal Neurological Institute standard space (MNI152)} using affine linear registration and resampled at 2mm cubic voxels
+		\STATE 
+
+	\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+
+
+
 
 
 
