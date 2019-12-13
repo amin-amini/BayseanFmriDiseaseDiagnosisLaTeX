@@ -222,7 +222,7 @@ In order to conquer the mentioned downsides of a conventional CNN in Parkinson's
 As we meant to put temporal data aside, we can assume that the fMRI data for each participant is $t$ different 3D images we had obtained from their brain (despite its time-based sequences). Correspondingly this assumption will multiply our dataset samples by $t (=198)$, enabling us to train our model faster and escape overfitting. On the other hand, in the test phase, our model won't just give binary predictions about a participant being a Parkinson's patient or a healthy control, but it can give us an approximation about the probability of a person being healthy or not. In this step, the trained network will give $t$ different predictions for each person (based on $t$ images) providing a ratio, which corresponds to a probability of healthiness, and we can set a criterion (like $0.5$) to decide if someone belongs to HC class or not.
 
 
-Proposed method can be briefly expressed as Algorithm \ref{alg:preprocessing}.
+The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod}. First of all, input data will be preprocessed using Algorithm \ref{alg:preprocessing}, which removes noises and non-informational data parts (such as the skull). In addition to that, each patient's scan will be normalized to a standard space that boosts the learning phase's efficiency. This step is followed by dividing each sample (containing $t$ 3D fMRI time-slices) to $t$ different images. For instance, in Parkinson's dataset, 30 samples consisted of 198 time-slices of \texttt{$39 \times 64 \times 64$} voxels will turn into $5940$ 3D images. We convert these data to TFRECORD format to improve performance. Furthermore, for each experiment, six participants ($20\%$ of all data) from both groups are randomly selected, and their $t$ time-slices are set aside for the test phase. On the other hand, the rest of the data (which are $24 \times 198$ labeled time-slices) will be shuffled and fed to our 3D deep Bayesian convolutional neural network. We use the first 158 time-slices as training samples while the remnants will be our validation portion of data correspondingly. 
 
 \begin{algorithm}
 	\caption{data preparation}
@@ -252,9 +252,14 @@ Proposed method can be briefly expressed as Algorithm \ref{alg:preprocessing}.
 \end{algorithm}
 
 
+Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. 
 
 
-
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/cnnArch}
+	\caption{proposed Bayesian 3D CNN architecture}
+	\label{fig:cnnArch}
+\end{figure}
 
 
 
