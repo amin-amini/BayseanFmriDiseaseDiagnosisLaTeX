@@ -142,11 +142,11 @@ b_{ij} +  \\
 
 Since fMRI images are 3D time series and our experiment tries to find out if images contain any useful information despite their sequences, three dimensional CNN can be used as our computational core. A simple 3D CNN can be seen in Figure \ref{fig:CnnSample}
 
-\begin{figure}
+\begin{figure*}
 	\includegraphics[width=\linewidth]{images/3dCnn}
 	\caption{3D CNN demonstration (kernel size = 3$\times$3$\times$3).}
 	\label{fig:CnnSample}
-\end{figure}
+\end{figure*}
 
 
 
@@ -210,11 +210,11 @@ As mentioned before, our experiment aims to find out if fMRI scans carry any hid
 Without a doubt, fMRI scans are nothing but spatial and temporal connectivities. As we aim to focus on spatial relations and put temporal ones aside, our algorithm must try to keep all of that information in calculations. Besides, Sarraf and Tofighi's method loses a lot of these connectivities by flattening data toward the $z$ axis. In addition to that, the mentioned data conversion will increase our model complexity and variance, especially in a case like Parkinson's disease dataset. In fact, by resizing 198 slices of $39 \times 64 \times 64$ voxels to a 2D $2496 \times 12672$ pixels, we are adding a lot of unnecessarily and incorrect spatial connectivities based on the $t$ axis and losing some important ones in the $z$ axis by misplacing them. As a result, it is predictable that flattening algorithm may lead to overfitting and compute-intensive calculations which can be seen in Figure \ref{fig:SarrafParkinsonTestResult}. This experiment ran on an NVIDIA GTX1080 and took $6h \; 47m \; 36s$.
 
 
-\begin{figure}
+\begin{figure*}
 	\includegraphics[width=\linewidth]{images/SarrafParkinsonTestResult}
 	\caption{Parkinson's disease diagnosis accuracy and loss using Sarraf and Tofighi's algorithm.}
 	\label{fig:SarrafParkinsonTestResult}
-\end{figure}
+\end{figure*}
 
 
 In order to conquer the mentioned downsides of a conventional CNN in Parkinson's disease diagnosis, we will introduce our method which keeps spatial information and can overcome overfitting by reducing model variance. To do so, the proposed algorithm will keep the $z$ index of data and feed them into a 3D Bayesian CNN. As discussed in Section \ref{section:bayesianDL} if we add dropouts before each convolution layer, our model will turn into a deep Bayesian convolutional neural network that can avoid overfitting. Dropouts remove some units (by setting their output values to zero) temporarily which enables other units to justify their weights. Consequently, remaining units in the training phase can precisely adjust their weights to more appropriate ranges if they already hold acceptable values, or keep away from unwanted boundaries noticeably if needed. In addition to that, Bayesian networks are dramatically less compute-intensive and can solve problems in even a single epoch. Hence, a mid-end CPU can be used instead of a high-end GPU in experiments.
@@ -222,7 +222,7 @@ In order to conquer the mentioned downsides of a conventional CNN in Parkinson's
 As we meant to put temporal data aside, we can assume that the fMRI data for each participant is $t$ different 3D images we had obtained from their brain (despite its time-based sequences). Correspondingly this assumption will multiply our dataset samples by $t (=198)$, enabling us to train our model faster and escape overfitting. On the other hand, in the test phase, our model won't just give binary predictions about a participant being a Parkinson's patient or a healthy control, but it can give us an approximation about the probability of a person being healthy or not. In this step, the trained network will give $t$ different predictions for each person (based on $t$ images) providing a ratio, which corresponds to a probability of healthiness, and we can set a criterion (like $0.5$) to decide if someone belongs to HC class or not.
 
 
-The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod}. First of all, input data will be preprocessed using Algorithm \ref{alg:preprocessing}, which removes noises and non-informational data parts (such as the skull). In addition to that, each patient's scan will be normalized to a standard space that boosts the learning phase's efficiency. This step is followed by dividing each sample (containing $t$ 3D fMRI time-slices) to $t$ different images. For instance, in Parkinson's dataset, 30 samples consisted of 198 time-slices of \texttt{$39 \times 64 \times 64$} voxels will turn into $5940$ 3D images. We convert these data to TFRECORD format to improve performance. Furthermore, for each experiment, six participants ($20\%$ of all data) from both groups are randomly selected, and their $t$ time-slices are set aside for the test phase. On the other hand, the rest of the data (which are $24 \times 198$ labeled time-slices) will be shuffled and fed to our 3D deep Bayesian convolutional neural network. We use the first 158 time-slices as training samples while the remnants will be our validation portion of data correspondingly. 
+First of all, input data will be preprocessed using Algorithm \ref{alg:preprocessing}, which removes noises and non-informational data parts (such as the skull). In addition to that, each patient's scan will be normalized to a standard space that boosts the learning phase's efficiency. This step is followed by dividing each sample (containing $t$ 3D fMRI time-slices) to $t$ different images. For instance, in Parkinson's dataset, 30 samples consisted of 198 time-slices of \texttt{$39 \times 64 \times 64$} voxels will turn into $5940$ 3D images. We convert these data to TFRECORD format to improve performance. Furthermore, for each experiment, six participants ($20\%$ of all data) from both groups are randomly selected, and their $t$ time-slices are set aside for the test phase. On the other hand, the rest of the data (which are $24 \times 198$ labeled time-slices) will be shuffled and fed to our 3D deep Bayesian convolutional neural network. We use the first 159 time-slices ($80\%$) as training samples while the remnants will be our validation portion of data correspondingly. 
 
 \begin{algorithm}
 	\caption{data preparation}
@@ -252,7 +252,7 @@ The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMetho
 \end{algorithm}
 
 
-Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. 
+Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. During the training phase, data gets split to 50 chunks ($95$ samples) which are fed sequentially to the network. Consequently the model can be validated during the training to prevent overfitting and enables us to track the whole process. The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod}. 
 
 
 \begin{figure}
@@ -263,6 +263,44 @@ Now we can start to train our model based on the proposed architecture which is 
 
 
 
+\begin{algorithm}
+	\caption{Proposed method}
+	\label{alg:proposedMethod}
+	
+	\begin{algorithmic}
+		
+		\INPUT{processed data which is the output of Algorithm \ref{alg:preprocessing}.}
+		\STATE \textbullet~Shuffle scans
+		\STATE \textbullet~Put 6 scans (3 group each) aside as test data
+		\STATE \textbullet~Split time-slices of data and shuffle them
+		\STATE \textbullet~Divide train and validation data to 50 chunks
+		\FORALL{50 chunks} 
+		\STATE train network (Fig. \ref{fig:cnnArch}) 
+		\STATE \hskip1.0em \textbullet~First
+		\ENDFOR
+		%\IF {$i\geq 5$} 
+		%\STATE $i\gets i-1$
+		%\ELSE
+		%\IF {$i\leq 3$}
+		%\STATE $i\gets i+2$
+		%\ENDIF
+		%\ENDIF 
+	\end{algorithmic}
+	
+%	\KwData{pre-processed data which is the output of Algorithm \ref{alg:preprocessing}.}
+%	\KwResult{trained Bayesian 3D CNN to diagnose Parkinson's disease patients}
+%	initialization\;
+%	\While{not at end of this document}{
+%		read current\;
+%		\eIf{understand}{
+%			go to next section\;
+%			current section becomes this one\;
+%		}{
+%			go back to the beginning of current section\;
+%		}
+%	}
+		
+\end{algorithm}
 
 
 
