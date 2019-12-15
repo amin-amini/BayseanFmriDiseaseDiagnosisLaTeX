@@ -25,10 +25,16 @@
 \usepackage[numbers]{natbib}
 \usepackage{amsmath}
 
+
+
 \usepackage{algorithm2e}
 \usepackage[noend]{algcompatible}
+
 \newcommand{\algorithmicinput}{\textbf{input}}
+
 \newcommand{\INPUT}{\item[\algorithmicinput]}
+
+
 
 \usepackage{textcomp}
 %\usepackage{mathpazo}
@@ -252,7 +258,9 @@ First of all, input data will be preprocessed using Algorithm \ref{alg:preproces
 \end{algorithm}
 
 
-Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. During the training phase, data gets split to 50 chunks ($95$ samples) which are fed sequentially to the network. Consequently the model can be validated during the training to prevent overfitting and enables us to track the whole process. The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod}. 
+Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. During the training phase, data gets split to 50 chunks ($95$ samples) which are fed sequentially to the network. Consequently, the model can be validated during the training to prevent overfitting and enables us to track the whole process. The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod} which $N_{i,p}$ indicates the number of predictions that instance $i$ is a Parkinson's patient and $N_{i,hc}$ indicates a Healthy Control. $\hat{Y}_{i,t}$ is the network prediction for $t$'th time-slice of sample $i$ whilst $Y_i$ is the real class and $C_{i,t}$ is the correctness of that output. Finally, $P_i$ is the predicted probability of how healthy a patient is, $\hat{Y}_i$ is the class based on $P_i$ and $C_i$ is the correctness of that prediction.
+
+Furthermore, our model's accuracy can be obtained in two different aspects. The first one would be the correctness of each time-slice prediction ($\bar{C}_{i,t}$), while the second, is the accuracy of disease diagnosis ($\bar{C}_i$), and we are mostly interested in the later.
 
 
 \begin{figure}
@@ -267,17 +275,60 @@ Now we can start to train our model based on the proposed architecture which is 
 	\caption{Proposed method}
 	\label{alg:proposedMethod}
 	
-	\begin{algorithmic}
+	\begin{algorithmic}[1]
 		
 		\INPUT{processed data which is the output of Algorithm \ref{alg:preprocessing}.}
-		\STATE \textbullet~Shuffle scans
-		\STATE \textbullet~Put 6 scans (3 group each) aside as test data
-		\STATE \textbullet~Split time-slices of data and shuffle them
-		\STATE \textbullet~Divide train and validation data to 50 chunks
-		\FORALL{50 chunks} 
-		\STATE train network (Fig. \ref{fig:cnnArch}) 
-		\STATE \hskip1.0em \textbullet~First
+		\STATE Shuffle scans
+		\STATE Put 6 scans (3 group each) aside as test data
+		\STATE Split time-slices of data and shuffle them
+		\STATE Divide train and validation data to 50 chunks
+		\FORALL{50 chunks}  Train network (Fig. \ref{fig:cnnArch}) 
+			\STATE Input dropout ($p=0.05$)
+			\STATE 3D convolution ($4@64\times64\times39 \;;\; kernel[5,5,5]$)
+			\STATE Dropout ($p=0.10$)
+			\STATE Max pooling ($4@16\times16\times9 \;;\; pool[4,4,4]$)
+			\STATE 3D convolution ($8@16\times16\times9 \;;\; kernel[4,4,4]$)
+			\STATE Dropout ($p=0.15$)
+			\STATE Max pooling ($8@4\times4\times2 \;;\; pool[4,4,4]$)
+			\STATE Dropout ($p=0.20$)
+			\STATE Fully connected layer ($16 \; units$)
+			\STATE Dropout ($p=0.20$)
+			\STATE Fully connected layer ($2 \; units$)
+			\STATE Validate and emit network loss and accuracy
 		\ENDFOR
+		
+		\FORALL{test data}
+			\STATE $N_{i,p} \gets 0 \;,\; N_{i,hc} \gets 0 \;,\; C_{i,t} \gets 0$
+			\FORALL{time-slices}
+				\IF {$\hat{Y}_{i,t} =\; $Parkinson's} 
+					\STATE $N_{i,p} \gets N_{i,p} + 1$
+				\ELSE
+					\STATE $N_{i,hc} \gets N_{i,hc} + 1$
+				\ENDIF
+				
+				\IF {$\hat{Y}_{i,t} = Y_i$} 
+					\STATE $C_{i,t} \gets 1$
+				\ELSE 
+					\STATE $C_{i,t} \gets 0$
+				\ENDIF
+			\ENDFOR
+			
+			\STATE ${P_{i}} \gets {N_{i,hc} \over N_{i,p}}$
+			
+			\IF {$ P_{i} \geq 0.5$}
+				\STATE $\hat{Y}_i \gets \;$ Healthy Control
+			\ELSE
+				\STATE $\hat{Y}_i \gets \;$ Parkinson's
+			\ENDIF
+			
+			\IF {$\hat{Y}_{i} = Y_{i}$} 
+				\STATE $C_{i} \gets 1$
+			\ELSE
+			\STATE $C_{i} \gets 0$
+			\ENDIF
+			
+		\ENDFOR
+		
 		%\IF {$i\geq 5$} 
 		%\STATE $i\gets i-1$
 		%\ELSE
