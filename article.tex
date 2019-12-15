@@ -37,6 +37,8 @@
 
 
 \usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
 %\usepackage{mathpazo}
 
 \input{mymacros.tex}
@@ -260,15 +262,6 @@ First of all, input data will be preprocessed using Algorithm \ref{alg:preproces
 
 Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. During the training phase, data gets split to 50 chunks ($95$ samples) which are fed sequentially to the network. Consequently, the model can be validated during the training to prevent overfitting and enables us to track the whole process. The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod} which $N_{i,p}$ indicates the number of predictions that instance $i$ is a Parkinson's patient and $N_{i,hc}$ indicates a Healthy Control. $\hat{Y}_{i,t}$ is the network prediction for $t$'th time-slice of sample $i$ whilst $Y_i$ is the real class and $C_{i,t}$ is the correctness of that output. Finally, $P_i$ is the predicted probability of how healthy a patient is, $\hat{Y}_i$ is the class based on $P_i$ and $C_i$ is the correctness of that prediction.
 
-Furthermore, our model's accuracy can be obtained in two different aspects. The first one would be the correctness of each time-slice prediction ($\bar{C}_{i,t}$), while the second, is the accuracy of disease diagnosis ($\bar{C}_i$), and we are mostly interested in the later.
-
-
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/cnnArch}
-	\caption{proposed Bayesian 3D CNN architecture}
-	\label{fig:cnnArch}
-\end{figure}
-
 
 
 \begin{algorithm}
@@ -283,50 +276,50 @@ Furthermore, our model's accuracy can be obtained in two different aspects. The 
 		\STATE Split time-slices of data and shuffle them
 		\STATE Divide train and validation data to 50 chunks
 		\FORALL{50 chunks}  Train network (Fig. \ref{fig:cnnArch}) 
-			\STATE Input dropout ($p=0.05$)
-			\STATE 3D convolution ($4@64\times64\times39 \;;\; kernel[5,5,5]$)
-			\STATE Dropout ($p=0.10$)
-			\STATE Max pooling ($4@16\times16\times9 \;;\; pool[4,4,4]$)
-			\STATE 3D convolution ($8@16\times16\times9 \;;\; kernel[4,4,4]$)
-			\STATE Dropout ($p=0.15$)
-			\STATE Max pooling ($8@4\times4\times2 \;;\; pool[4,4,4]$)
-			\STATE Dropout ($p=0.20$)
-			\STATE Fully connected layer ($16 \; units$)
-			\STATE Dropout ($p=0.20$)
-			\STATE Fully connected layer ($2 \; units$)
-			\STATE Validate and emit network loss and accuracy
+		\STATE Input dropout ($p=0.05$)
+		\STATE 3D convolution ($4@64\times64\times39 \;;\; kernel[5,5,5]$)
+		\STATE Dropout ($p=0.10$)
+		\STATE Max pooling ($4@16\times16\times9 \;;\; pool[4,4,4]$)
+		\STATE 3D convolution ($8@16\times16\times9 \;;\; kernel[4,4,4]$)
+		\STATE Dropout ($p=0.15$)
+		\STATE Max pooling ($8@4\times4\times2 \;;\; pool[4,4,4]$)
+		\STATE Dropout ($p=0.20$)
+		\STATE Fully connected layer ($16 \; units$)
+		\STATE Dropout ($p=0.20$)
+		\STATE Fully connected layer ($2 \; units$)
+		\STATE Validate and emit network loss and accuracy
 		\ENDFOR
 		
 		\FORALL{test data}
-			\STATE $N_{i,p} \gets 0 \;,\; N_{i,hc} \gets 0 \;,\; C_{i,t} \gets 0$
-			\FORALL{time-slices}
-				\IF {$\hat{Y}_{i,t} =\; $Parkinson's} 
-					\STATE $N_{i,p} \gets N_{i,p} + 1$
-				\ELSE
-					\STATE $N_{i,hc} \gets N_{i,hc} + 1$
-				\ENDIF
-				
-				\IF {$\hat{Y}_{i,t} = Y_i$} 
-					\STATE $C_{i,t} \gets 1$
-				\ELSE 
-					\STATE $C_{i,t} \gets 0$
-				\ENDIF
-			\ENDFOR
-			
-			\STATE ${P_{i}} \gets {N_{i,hc} \over N_{i,p}}$
-			
-			\IF {$ P_{i} \geq 0.5$}
-				\STATE $\hat{Y}_i \gets \;$ Healthy Control
-			\ELSE
-				\STATE $\hat{Y}_i \gets \;$ Parkinson's
-			\ENDIF
-			
-			\IF {$\hat{Y}_{i} = Y_{i}$} 
-				\STATE $C_{i} \gets 1$
-			\ELSE
-			\STATE $C_{i} \gets 0$
-			\ENDIF
-			
+		\STATE $N_{i,p} \gets 0 \;,\; N_{i,hc} \gets 0 \;,\; C_{i,t} \gets 0$
+		\FORALL{time-slices}
+		\IF {$\hat{Y}_{i,t} =\; $Parkinson's} 
+		\STATE $N_{i,p} \gets N_{i,p} + 1$
+		\ELSE
+		\STATE $N_{i,hc} \gets N_{i,hc} + 1$
+		\ENDIF
+		
+		\IF {$\hat{Y}_{i,t} = Y_i$} 
+		\STATE $C_{i,t} \gets 1$
+		\ELSE 
+		\STATE $C_{i,t} \gets 0$
+		\ENDIF
+		\ENDFOR
+		
+		\STATE ${P_{i}} \gets {N_{i,hc} \over N_{i,p}}$
+		
+		\IF {$ P_{i} \geq 0.5$}
+		\STATE $\hat{Y}_i \gets \;$ Healthy Control
+		\ELSE
+		\STATE $\hat{Y}_i \gets \;$ Parkinson's
+		\ENDIF
+		
+		\IF {$\hat{Y}_{i} = Y_{i}$} 
+		\STATE $C_{i} \gets 1$
+		\ELSE
+		\STATE $C_{i} \gets 0$
+		\ENDIF
+		
 		\ENDFOR
 		
 		%\IF {$i\geq 5$} 
@@ -338,20 +331,50 @@ Furthermore, our model's accuracy can be obtained in two different aspects. The 
 		%\ENDIF 
 	\end{algorithmic}
 	
-%	\KwData{pre-processed data which is the output of Algorithm \ref{alg:preprocessing}.}
-%	\KwResult{trained Bayesian 3D CNN to diagnose Parkinson's disease patients}
-%	initialization\;
-%	\While{not at end of this document}{
-%		read current\;
-%		\eIf{understand}{
-%			go to next section\;
-%			current section becomes this one\;
-%		}{
-%			go back to the beginning of current section\;
-%		}
-%	}
-		
+	%	\KwData{pre-processed data which is the output of Algorithm \ref{alg:preprocessing}.}
+	%	\KwResult{trained Bayesian 3D CNN to diagnose Parkinson's disease patients}
+	%	initialization\;
+	%	\While{not at end of this document}{
+	%		read current\;
+	%		\eIf{understand}{
+	%			go to next section\;
+	%			current section becomes this one\;
+	%		}{
+	%			go back to the beginning of current section\;
+	%		}
+	%	}
+	
 \end{algorithm}
+
+
+
+Furthermore, our model's accuracy can be obtained in two different aspects. The first one would be the correctness of each time-slice prediction ($\overline{C}_{i,t}$), while the second, is the accuracy of disease diagnosis ($\overline{C}_i$), and we are mostly interested in the later. Both of the mentioned statistics can be calculated using Equation \eqref{eq:meanCorrectness}.
+
+
+\begin{figure*}
+	\includegraphics[width=\linewidth]{images/cnnArchHorizontal}
+	\caption{Proposed architecture}
+	\label{fig:cnnHorizontalArch}
+\end{figure*}
+
+\begin{eqnarray}
+\label{eq:meanCorrectness}
+\overline{C_{i,t}} &=& {{\sum_{i=1}^{m} \sum_{t=1}^{T (=198)} C_{i,t} } \over {m \times T} } \\ 
+\overline{C_i} &=& {{\sum_{i=1}^{m} C_i } \over {m } }  \nonumber 
+\end{eqnarray}
+
+
+
+As can be seen in Figure \ref{fig:cnnHorizontalArch}, we have added different dropout units between our convolution and pooling layers to avoid overfitting, decrease variance and make convergence to appropriate weights faster. In addition to that, dropout probabilities increase in each layer because layers with less free parameters have a greater chance to train well even if they are less frequently updated. In other words, a huge number of parameters cannot tune acceptably with a small amount of data while getting omitted a lot. On the other hand, as there are only 16 weights in the first fully connected layer, higher dropout probabilities can speed up the training process.
+
+
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/cnnArch}
+	\caption{Proposed Bayesian 3D CNN architecture}
+	\label{fig:cnnArch}
+\end{figure}
+
 
 
 
