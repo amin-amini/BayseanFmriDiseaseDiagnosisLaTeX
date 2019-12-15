@@ -233,8 +233,8 @@ As we meant to put temporal data aside, we can assume that the fMRI data for eac
 
 First of all, input data will be preprocessed using Algorithm \ref{alg:preprocessing}, which removes noises and non-informational data parts (such as the skull). In addition to that, each patient's scan will be normalized to a standard space that boosts the learning phase's efficiency. This step is followed by dividing each sample (containing $t$ 3D fMRI time-slices) to $t$ different images. For instance, in Parkinson's dataset, 30 samples consisted of 198 time-slices of \texttt{$39 \times 64 \times 64$} voxels will turn into $5940$ 3D images. We convert these data to TFRECORD format to improve performance. Furthermore, for each experiment, six participants ($20\%$ of all data) from both groups are randomly selected, and their $t$ time-slices are set aside for the test phase. On the other hand, the rest of the data (which are $24 \times 198$ labeled time-slices) will be shuffled and fed to our 3D deep Bayesian convolutional neural network. We use the first 159 time-slices ($80\%$) as training samples while the remnants will be our validation portion of data correspondingly. 
 
-\begin{algorithm}
-	\caption{data preparation}
+\begin{algorithm*}
+	\caption{Data preparation}
 	\label{alg:preprocessing}
 	\begin{algorithmic}
 		\INPUT{raw fMRI images}
@@ -258,7 +258,7 @@ First of all, input data will be preprocessed using Algorithm \ref{alg:preproces
 		\STATE 
 
 	\end{algorithmic}
-\end{algorithm}
+\end{algorithm*}
 
 
 Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. During the training phase, data gets split to 50 chunks ($95$ samples) which are fed sequentially to the network. Consequently, the model can be validated during the training to prevent overfitting and enables us to track the whole process. The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod} which $N_{i,p}$ indicates the number of predictions that instance $i$ is a Parkinson's patient and $N_{i,hc}$ indicates a Healthy Control. $\hat{Y}_{i,t}$ is the network prediction for $t$'th time-slice of sample $i$ whilst $Y_i$ is the real class and $C_{i,t}$ is the correctness of that output. Finally, $P_i$ is the predicted probability of how healthy a patient is, $\hat{Y}_i$ is the class based on $P_i$ and $C_i$ is the correctness of that prediction.
@@ -349,7 +349,7 @@ Now we can start to train our model based on the proposed architecture which is 
 
 
 
-Furthermore, our model's accuracy can be obtained in two different aspects. The first one would be the correctness of each time-slice prediction ($\overline{C}_{i,t}$), while the second, is the accuracy of disease diagnosis ($\overline{C}_i$), and we are mostly interested in the later. Both of the mentioned statistics can be calculated using Equation \eqref{eq:meanCorrectness}.
+Furthermore, our model's accuracy can be obtained in two different aspects. The first one would be the correctness of each time-slice prediction ($\overline{C}_{T}$), while the second, is the accuracy of disease diagnosis ($\overline{C}$), and we are mostly interested in the later. Both of the mentioned statistics can be calculated using Equations \eqref{eq:meanTimeSliceCorrectness} and \eqref{eq:meanCorrectness}.
 
 
 \begin{figure*}
@@ -359,9 +359,10 @@ Furthermore, our model's accuracy can be obtained in two different aspects. The 
 \end{figure*}
 
 \begin{eqnarray}
+\label{eq:meanTimeSliceCorrectness}
+\overline{C_{T}} &=& {{\sum_{i=1}^{m} \sum_{t=1}^{T (=198)} C_{i,t} } \over {m \times T} } \\ 
 \label{eq:meanCorrectness}
-\overline{C_{i,t}} &=& {{\sum_{i=1}^{m} \sum_{t=1}^{T (=198)} C_{i,t} } \over {m \times T} } \\ 
-\overline{C_i} &=& {{\sum_{i=1}^{m} C_i } \over {m } }  \nonumber 
+\overline{C} &=& {{\sum_{i=1}^{m} C_i } \over {m } } 
 \end{eqnarray}
 
 
@@ -382,14 +383,21 @@ As can be seen in Figure \ref{fig:cnnHorizontalArch}, we have added different dr
 \label{section:results}
 As discussed in Section \ref{section:proposedMethod}, our method does not demand high processing power so we can use a CPU for our experiments. All of the tests had been run on an Intel\textsuperscript{\tiny\textregistered} 4710HQ CPU. Averagely, the training phase takes $1h \; 12m \; 4s$ and the test phase finishes in $6m \; 41s$. Also it worth mentioning that the application consumes 270 megabytes of RAM thanks to the TFRECORD file format.
 
+Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can define the average of mean accuracies as Equations \eqref{eq:averageMeanTimeSliceCorrectness} and \eqref{eq:averageMeanCorrectness} in order to use them as a measure that shows how the model is performing in the case of accuracy. 
+
+\begin{eqnarray}
+\label{eq:averageMeanTimeSliceCorrectness}
+\mathbf{C_t} &=& {{\sum_{j=1}^{J} \overline{C_{T}} } \over {J} } \\ 
+\label{eq:averageMeanCorrectness}
+\mathbf{C} &=& {{\sum_{j=1}^{J} \overline{C} } \over {J} } 
+\end{eqnarray}
 
 
 \begin{table}
-	\label{table:averageAccuracies}
 	\caption{Average accuracies for different tests}
 	\begin{tabular}{ c | c | c }
 		\hline
-		$i$ & $\overline{C_{i,t}}\;(\%)$ & $\overline{C_i}\;(\%)$ \\ 
+		$j$ & $\overline{C_{i,t}}\;(\%)$ & $\overline{C_i}\;(\%)$ \\ 
 		test no. & mean time-slice accuracy & mean accuracy \\ \hline
 		1 & 100 & 100 \\
 		2 & 97.90 & 100 \\
@@ -398,9 +406,12 @@ As discussed in Section \ref{section:proposedMethod}, our method does not demand
 		5 & 97.14 & 100 \\
 		6 & 100 & 100 \\
 		7 & 98.65 & 100 \\
-		8 & 78.87 & 83.33 \\
+		8 & 78.87 & 83.33 \\ \hline
+		Average & $\mathbf{C_t} = $ 92.96 & $\mathbf{C} = $ 95.83 \\
 	\end{tabular}
+\label{table:averageAccuracies}
 \end{table}
+
 
 
 
