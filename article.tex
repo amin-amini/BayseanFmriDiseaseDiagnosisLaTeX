@@ -307,7 +307,7 @@ Now we can start to train our model based on the proposed architecture which is 
 		\ENDIF
 		\ENDFOR
 		
-		\STATE ${P_{i}} \gets {N_{i,hc} \over N_{i,p}}$
+		\STATE ${P_{i}} \gets {N_{i,hc} \over T_{(=198)}}$
 		
 		\IF {$ P_{i} \geq 0.5$}
 		\STATE $\hat{Y}_i \gets \;$ Healthy Control
@@ -395,7 +395,7 @@ Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can
 
 \begin{table}
 	\caption{Average accuracies for different tests}
-	\begin{tabular}{ c | c | c }
+	\begin{tabular}{| c | c | c| }
 		\hline
 		$j$ & $\overline{C_{i,t}}\;(\%)$ & $\overline{C_i}\;(\%)$ \\ 
 		test no. & mean time-slice accuracy & mean accuracy \\ \hline
@@ -408,11 +408,12 @@ Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can
 		7 & 98.65 & 100 \\
 		8 & 78.87 & 83.33 \\ \hline
 		Average & $\mathbf{C_t} = $ 92.96 & $\mathbf{C} = $ 95.83 \\
+		\hline
 	\end{tabular}
 \label{table:averageAccuracies}
 \end{table}
 
-
+As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models.
 
 
 
