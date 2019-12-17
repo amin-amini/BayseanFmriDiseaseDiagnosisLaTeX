@@ -371,11 +371,6 @@ As can be seen in Figure \ref{fig:cnnHorizontalArch}, we have added different dr
 
 
 
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/cnnArch}
-	\caption{Proposed Bayesian 3D CNN architecture}
-	\label{fig:cnnArch}
-\end{figure}
 
 
 
@@ -413,12 +408,259 @@ Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can
 \label{table:averageAccuracies}
 \end{table}
 
-As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models.
+As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models. 
+
+
+
+
+\begin{table}
+	\caption{Test results for experiment 1. HC stands for Health Control while P means Parkinson's disease}
+	\resizebox{\linewidth}{!}{%
+		\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+			\hline
+			patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+			CTL04 & HC & 198 &  0  & 100 & 1 & HC & 100 \\
+			CTL05 & HC & 198 &  0  & 100 & 1 & HC & 100 \\
+			CTL02 & HC & 198 &  0  & 100 & 1 & HC & 100 \\
+			ODP04 & P   &  0  & 198 & 100 & 0 &  P  & 100 \\
+			ODP05 & P   &  0  & 198 & 100 & 0 &  P  & 100 \\
+			ODP02 & P   &  0  & 198 & 100 & 0 &  P  & 100 \\ \hline
+			\multicolumn{4}{|r|}{\tiny{Mean time-slice accuracy} $\overline{C_{i,t}}$} & 100 &
+			\multicolumn{2}{|r|}{\tiny{Mean accuracy} $\overline{C_{i}}$} & 100 \\
+			\hline
+		\end{tabular}
+	}
+	\label{table:tests_1}
+\end{table}
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/tests_1}
+	\caption{Experiment 1. Accuracy and loss of network for training and validation data. Accuracy is based on validation data and loss diagram contains train data loss in blue and validation loss in orange.}
+	\label{fig:tests_1}
+\end{figure}
+
+
+
+
+\begin{table}
+	\caption{Test results for experiment 2.}
+	\resizebox{\linewidth}{!}{%
+		\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+			\hline
+			patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+			CTL08 & HC & 191 &  7  & 96.46 & 0.9646 & HC & 100 \\
+			CTL12 & HC & 195 &  3  & 98.48 & 0.9848 & HC & 100 \\
+			CTL01 & HC & 198 &  0  & 100 & 1 & HC & 100 \\
+			ODP08 & P   &  1  & 197 & 99.49 & 0.0050 &  P  & 100 \\
+			ODP12 & P   &  2  & 196 & 98.99 & 0.0101 &  P  & 100 \\
+			ODP01 & P   &  12  & 186 & 93.94 & 0.0606 &  P  & 100 \\ \hline
+			\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 97.90 &
+			\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
+			\hline
+		\end{tabular}
+	}
+	\label{table:tests_2}
+\end{table}
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/tests_2}
+	\caption{Experiment 2. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_2}
+\end{figure}
+
+
+
+
+\begin{table}
+\caption{Test results for experiment 3.}
+\resizebox{\linewidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+		\hline
+		patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+		CTL03 & HC & 198 &  0   &   100   &     1      & HC & 100 \\
+		CTL13 & HC & 198 &  0   &   100   &     1      & HC & 100 \\
+		CTL14 & HC & 198 &  0   &   100   &     1      & HC & 100 \\
+		ODP03 & P  &  53  & 145 & 73.23 & 0.2677 &  P  & 100 \\
+		ODP13 & P  & 198 &   0   &     0    &      1      & HC  & 0 \\
+		ODP14 & P  & 48  &  150 & 75.76  & 0.2424 &  P  & 100 \\ \hline
+		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 74.83 &
+		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 83.33 \\
+		\hline
+	\end{tabular}
+}
+\label{table:tests_3}
+\end{table}
+\begin{figure}
+\includegraphics[width=\linewidth]{images/tests_3}
+\caption{Experiment 3. Accuracy and loss of network for training and validation data.}
+\label{fig:tests_3}
+\end{figure}
+
+
+
+
+\begin{table}
+\caption{Test results for experiment 4.}
+\resizebox{\linewidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+		\hline
+		patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+		CTL12 & HC & 185 & 13  & 93.43 & 0.9343 & HC & 100 \\
+		CTL06 & HC & 197 &  1   & 99.49 & 0.9949 & HC & 100 \\
+		CTL11 & HC & 170 & 28  & 85.86 & 0.8586 & HC & 100 \\
+		ODP12 & P  &   0   & 198 &  100   &      0     &  P  & 100 \\
+		ODP06 & P  &   0   & 198 &  100   &      0     &  P  & 100 \\
+		ODP11 & P  &   2   & 196 & 98.99 & 0.0101  &  P  & 100 \\ \hline
+		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 96.30 &
+		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100  \\
+		\hline
+	\end{tabular}
+}
+\label{table:tests_4}
+\end{table}
+\begin{figure}
+\includegraphics[width=\linewidth]{images/tests_4}
+\caption{Experiment 4. Accuracy and loss of network for training and validation data.}
+\label{fig:tests_4}
+\end{figure}
+
+
+
+
+\begin{table}
+\caption{Test results for experiment 5.}
+\resizebox{\linewidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+		\hline
+		patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+		CTL15 & HC & 198 &   0   &  100  & 1 & HC & 100 \\
+		CTL11 & HC & 198  &   0   &  100  & 1 & HC & 100 \\
+		CTL07 & HC & 198 &   0   &  100  & 1 & HC & 100 \\
+		ODP15 & P   &   0   & 198 &  100  & 0 &  P  & 100 \\
+		ODP11 & P   &  34  &  164 &82.83& 0.1717 &  P  & 100 \\
+		ODP07 & P  &   0   &  198 & 1 00  &0  &  P  & 100 \\ \hline
+		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 97.14 &
+		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
+		\hline
+	\end{tabular}
+}
+\label{table:tests_5}
+\end{table}
+\begin{figure}
+\includegraphics[width=\linewidth]{images/tests_5}
+\caption{Experiment 5. Accuracy and loss of network for training and validation data.}
+\label{fig:tests_5}
+\end{figure}
+
+
+
+
+\begin{table}
+\caption{Test results for experiment 6.}
+\resizebox{\linewidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+		\hline
+		patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+		CTL10 & HC & 198 &  0 & 100 & 1 & HC & 100 \\
+		CTL03 & HC & 198 &  0 & 100 & 1 & HC & 100 \\
+		CTL02 & HC & 198 &  0 & 100 & 1 & HC & 100 \\
+		ODP10 & P  &  0  & 198 & 100 & 0 &  P  & 100 \\
+		ODP03 & P  &  0  & 198 & 100 & 0 &  P  & 100 \\
+		ODP02 & P  &  0  & 198 & 100 & 0 &  P  & 100 \\ \hline
+		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 100 &
+		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
+		\hline
+	\end{tabular}
+}
+\label{table:tests_6}
+\end{table}
+\begin{figure}
+\includegraphics[width=\linewidth]{images/tests_6}
+\caption{Experiment 6. Accuracy and loss of network for training and validation data.}
+\label{fig:tests_6}
+\end{figure}
+
+
+
+
+\begin{table}
+\caption{Test results for experiment 7.}
+\resizebox{\linewidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+		\hline
+		patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+		CTL05 & HC & 194 &  4   & 97.98 & 0.9798 & HC & 100 \\
+		CTL04 & HC & 198 &  0   &   100  &      1     & HC & 100 \\
+		CTL10 & HC & 186  &  12 & 93.94 & 0.9394 & HC & 100 \\
+		ODP05 & P  &   0   & 198 &   100  &     0     &  P  & 100 \\
+		ODP04 & P  &   0   & 198 &   100  &     0     &  P  & 100 \\
+		ODP10 & P  &   0    & 198 &   100  &    0      &  P  & 100 \\ \hline
+		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 98.65 &
+		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
+		\hline
+	\end{tabular}
+}
+\label{table:tests_7}
+\end{table}
+\begin{figure}
+\includegraphics[width=\linewidth]{images/tests_7}
+\caption{Experiment 7. Accuracy and loss of network for training and validation data.}
+\label{fig:tests_7}
+\end{figure}
+
+
+
+
+\begin{table}
+\caption{Test results for experiment 8.}
+\resizebox{\linewidth}{!}{%
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | }
+		\hline
+		patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
+		CTL09 & HC & 25  & 173 & 12.63 &  0.1263 &  P  & 0 \\
+		CTL12 & HC & 122 &  76  & 61.62 & 0.6162 & HC & 100 \\
+		CTL06 & HC & 198 &   0  &  100   &    1       & HC & 100 \\
+		ODP09 & P  &   0   & 198 &  100   &    0       &  P  & 100 \\
+		ODP12 &  P  &   2   & 196 & 98.99 & 0.0101 &  P  & 100 \\
+		ODP06 & P  &   0   & 198 &  100   &    0       &  P  & 100 \\ \hline
+		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 78.87 &
+		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 83.33 \\
+		\hline
+	\end{tabular}
+}
+\label{table:tests_8}
+\end{table}
+\begin{figure}
+\includegraphics[width=\linewidth]{images/tests_8}
+\caption{Experiment 8. Accuracy and loss of network for training and validation data.}
+\label{fig:tests_8}
+\end{figure}
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/cnnArch}
+	\caption{Proposed Bayesian 3D CNN architecture}
+	\label{fig:cnnArch}
+\end{figure}
 
 \appendix
 \section{My Appendix}
