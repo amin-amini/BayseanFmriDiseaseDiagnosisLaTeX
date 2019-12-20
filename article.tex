@@ -152,7 +152,7 @@ b_{ij} +  \\
 Since fMRI images are 3D time series and our experiment tries to find out if images contain any useful information despite their sequences, three dimensional CNN can be used as our computational core. A simple 3D CNN can be seen in Figure \ref{fig:CnnSample}
 
 \begin{figure*}
-	\includegraphics[width=\linewidth]{images/3dCnn}
+	\includegraphics[width=0.8\linewidth]{images/3dCnn}
 	\caption{3D CNN demonstration (kernel size = 3$\times$3$\times$3).}
 	\label{fig:CnnSample}
 \end{figure*}
@@ -401,14 +401,14 @@ Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can
 		5 & 97.14 & 100 \\
 		6 & 100 & 100 \\
 		7 & 98.65 & 100 \\
-		8 & 78.87 & 83.33 \\ \hline
-		Average & $\mathbf{C_t} = $ 92.96 & $\mathbf{C} = $ 95.83 \\
+		8 & 85.35 & 100 \\ \hline
+		Average & $\mathbf{C_t} = $ 93.77 & $\mathbf{C} = $ 97.92 \\
 		\hline
 	\end{tabular}
 \label{table:averageAccuracies}
 \end{table}
 
-As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models. 
+As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy, which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models. 
 
 
 
@@ -427,7 +427,47 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 			ODP02 & P   &  0  & 198 & 100 & 0 &  P  & 100 \\ \hline
 			\multicolumn{4}{|r|}{\tiny{Mean time-slice accuracy} $\overline{C_{i,t}}$} & 100 &
 			\multicolumn{2}{|r|}{\tiny{Mean accuracy} $\overline{C_{i}}$} & 100 \\
-			\hline
+			\hline \hline
+			
+			\multicolumn{2}{|r|}{True positive (TP)} & 
+			\multicolumn{2}{c|}{ 3 } &
+			\multicolumn{2}{|r|}{False positive (FP)} & 
+			\multicolumn{2}{c|}{ 0 } \\ 
+			\multicolumn{2}{|r|}{False negative (FN)} & 
+			\multicolumn{2}{c|}{ 0 } &
+			\multicolumn{2}{|r|}{True negative (TN)} & 
+			\multicolumn{2}{c|}{ 3 }  \\
+			\hline \hline
+			
+			\multicolumn{2}{|r|}{Time-slice TP} & 
+			\multicolumn{2}{c|}{ 594 } &
+			\multicolumn{2}{|r|}{Time-slice FP} & 
+			\multicolumn{2}{c|}{ 0 } \\ 
+			\multicolumn{2}{|r|}{Time-slice FN} & 
+			\multicolumn{2}{c|}{ 0 } &
+			\multicolumn{2}{|r|}{Time-slice TN} & 
+			\multicolumn{2}{c|}{ 594 }  \\
+			\hline \hline
+			
+			\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+			\multicolumn{2}{c|}{ 1 } &
+			\multicolumn{2}{|r|}{Sensitivity} & 
+			\multicolumn{2}{c|}{ 1 } \\ 
+			
+			\multicolumn{2}{|r|}{Time-slice specificity} & 
+			\multicolumn{2}{c|}{ 1 } &
+			\multicolumn{2}{|r|}{Specificity} & 
+			\multicolumn{2}{c|}{ 1 } \\ 
+			
+			\multicolumn{2}{|r|}{Time-slice PPV} & 
+			\multicolumn{2}{c|}{ 1 } &
+			\multicolumn{2}{|r|}{PPV} & 
+			\multicolumn{2}{c|}{ 1 } \\ 
+			
+			\multicolumn{2}{|r|}{Time-slice NPV} & 
+			\multicolumn{2}{c|}{ 1 } &
+			\multicolumn{2}{|r|}{NPV} & 
+			\multicolumn{2}{c|}{ 1 } \\ \hline
 		\end{tabular}
 	}
 	\label{table:tests_1}
@@ -455,7 +495,47 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 			ODP01 & P   &  12  & 186 & 93.94 & 0.0606 &  P  & 100 \\ \hline
 			\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 97.90 &
 			\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
-			\hline
+			\hline \hline
+			
+			\multicolumn{2}{|r|}{True positive (TP)} & 
+			\multicolumn{2}{c|}{ 3 } &
+			\multicolumn{2}{|r|}{False positive (FP)} & 
+			\multicolumn{2}{c|}{ 0 } \\ 
+			\multicolumn{2}{|r|}{False negative (FN)} & 
+			\multicolumn{2}{c|}{ 0 } &
+			\multicolumn{2}{|r|}{True negative (TN)} & 
+			\multicolumn{2}{c|}{ 3 }  \\
+			\hline \hline
+			
+			\multicolumn{2}{|r|}{Time-slice TP} & 
+			\multicolumn{2}{c|}{ 584 } &
+			\multicolumn{2}{|r|}{Time-slice FP} & 
+			\multicolumn{2}{c|}{ 15 } \\ 
+			\multicolumn{2}{|r|}{Time-slice FN} & 
+			\multicolumn{2}{c|}{ 10 } &
+			\multicolumn{2}{|r|}{Time-slice TN} & 
+			\multicolumn{2}{c|}{ 579 }  \\
+			\hline \hline
+			
+			\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+			\multicolumn{2}{c|}{ 0.983164983 } &
+			\multicolumn{2}{|r|}{Sensitivity} & 
+			\multicolumn{2}{c|}{ 1 } \\ 
+			
+			\multicolumn{2}{|r|}{Time-slice specificity} & 
+			\multicolumn{2}{c|}{ 0.974747475 } &
+			\multicolumn{2}{|r|}{Specificity} & 
+			\multicolumn{2}{c|}{ 1 } \\ 
+			
+			\multicolumn{2}{|r|}{Time-slice PPV} & 
+			\multicolumn{2}{c|}{ 0.974958264 } &
+			\multicolumn{2}{|r|}{PPV} & 
+			\multicolumn{2}{c|}{ 1 } \\ 
+			
+			\multicolumn{2}{|r|}{Time-slice NPV} & 
+			\multicolumn{2}{c|}{ 0.983022071 } &
+			\multicolumn{2}{|r|}{NPV} & 
+			\multicolumn{2}{c|}{ 1 } \\ \hline
 		\end{tabular}
 	}
 	\label{table:tests_2}
@@ -483,7 +563,47 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 		ODP14 & P  & 48  &  150 & 75.76  & 0.2424 &  P  & 100 \\ \hline
 		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 74.83 &
 		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 83.33 \\
-		\hline
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{True positive (TP)} & 
+		\multicolumn{2}{c|}{ 3 } &
+		\multicolumn{2}{|r|}{False positive (FP)} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		\multicolumn{2}{|r|}{False negative (FN)} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{True negative (TN)} & 
+		\multicolumn{2}{c|}{ 2 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice TP} & 
+		\multicolumn{2}{c|}{ 594 } &
+		\multicolumn{2}{|r|}{Time-slice FP} & 
+		\multicolumn{2}{c|}{ 299 } \\ 
+		\multicolumn{2}{|r|}{Time-slice FN} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{Time-slice TN} & 
+		\multicolumn{2}{c|}{ 295 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{Sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice specificity} & 
+		\multicolumn{2}{c|}{ 0.496632997 } &
+		\multicolumn{2}{|r|}{Specificity} & 
+		\multicolumn{2}{c|}{ 0.666666667 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice PPV} & 
+		\multicolumn{2}{c|}{ 0.665173572 } &
+		\multicolumn{2}{|r|}{PPV} & 
+		\multicolumn{2}{c|}{ 0.75 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice NPV} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{NPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ \hline
 	\end{tabular}
 }
 \label{table:tests_3}
@@ -511,7 +631,47 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 		ODP11 & P  &   2   & 196 & 98.99 & 0.0101  &  P  & 100 \\ \hline
 		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 96.30 &
 		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100  \\
-		\hline
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{True positive (TP)} & 
+		\multicolumn{2}{c|}{ 3 } &
+		\multicolumn{2}{|r|}{False positive (FP)} & 
+		\multicolumn{2}{c|}{ 0 } \\ 
+		\multicolumn{2}{|r|}{False negative (FN)} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{True negative (TN)} & 
+		\multicolumn{2}{c|}{ 3 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice TP} & 
+		\multicolumn{2}{c|}{ 552 } &
+		\multicolumn{2}{|r|}{Time-slice FP} & 
+		\multicolumn{2}{c|}{ 2 } \\ 
+		\multicolumn{2}{|r|}{Time-slice FN} & 
+		\multicolumn{2}{c|}{ 42 } &
+		\multicolumn{2}{|r|}{Time-slice TN} & 
+		\multicolumn{2}{c|}{ 592 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+		\multicolumn{2}{c|}{ 0.929292929 } &
+		\multicolumn{2}{|r|}{Sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice specificity} & 
+		\multicolumn{2}{c|}{ 0.996632997 } &
+		\multicolumn{2}{|r|}{Specificity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice PPV} & 
+		\multicolumn{2}{c|}{ 0.996389892 } &
+		\multicolumn{2}{|r|}{PPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice NPV} & 
+		\multicolumn{2}{c|}{ 0.933753943 } &
+		\multicolumn{2}{|r|}{NPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ \hline
 	\end{tabular}
 }
 \label{table:tests_4}
@@ -539,7 +699,47 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 		ODP07 & P  &   0   &  198 & 1 00  &0  &  P  & 100 \\ \hline
 		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 97.14 &
 		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
-		\hline
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{True positive (TP)} & 
+		\multicolumn{2}{c|}{ 3 } &
+		\multicolumn{2}{|r|}{False positive (FP)} & 
+		\multicolumn{2}{c|}{ 0 } \\ 
+		\multicolumn{2}{|r|}{False negative (FN)} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{True negative (TN)} & 
+		\multicolumn{2}{c|}{ 3 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice TP} & 
+		\multicolumn{2}{c|}{ 594 } &
+		\multicolumn{2}{|r|}{Time-slice FP} & 
+		\multicolumn{2}{c|}{ 34 } \\ 
+		\multicolumn{2}{|r|}{Time-slice FN} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{Time-slice TN} & 
+		\multicolumn{2}{c|}{ 560 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{Sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice specificity} & 
+		\multicolumn{2}{c|}{ 0.942760943 } &
+		\multicolumn{2}{|r|}{Specificity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice PPV} & 
+		\multicolumn{2}{c|}{ 0.945859873 } &
+		\multicolumn{2}{|r|}{PPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice NPV} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{NPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ \hline
 	\end{tabular}
 }
 \label{table:tests_5}
@@ -567,7 +767,47 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 		ODP02 & P  &  0  & 198 & 100 & 0 &  P  & 100 \\ \hline
 		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 100 &
 		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
-		\hline
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{True positive (TP)} & 
+		\multicolumn{2}{c|}{ 3 } &
+		\multicolumn{2}{|r|}{False positive (FP)} & 
+		\multicolumn{2}{c|}{ 0 } \\ 
+		\multicolumn{2}{|r|}{False negative (FN)} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{True negative (TN)} & 
+		\multicolumn{2}{c|}{ 3 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice TP} & 
+		\multicolumn{2}{c|}{ 594 } &
+		\multicolumn{2}{|r|}{Time-slice FP} & 
+		\multicolumn{2}{c|}{ 0 } \\ 
+		\multicolumn{2}{|r|}{Time-slice FN} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{Time-slice TN} & 
+		\multicolumn{2}{c|}{ 594 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{Sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice specificity} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{Specificity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice PPV} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{PPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice NPV} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{NPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ \hline
 	\end{tabular}
 }
 \label{table:tests_6}
@@ -595,7 +835,47 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 		ODP10 & P  &   0    & 198 &   100  &    0      &  P  & 100 \\ \hline
 		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 98.65 &
 		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
-		\hline
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{True positive (TP)} & 
+		\multicolumn{2}{c|}{ 3 } &
+		\multicolumn{2}{|r|}{False positive (FP)} & 
+		\multicolumn{2}{c|}{ 0 } \\ 
+		\multicolumn{2}{|r|}{False negative (FN)} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{True negative (TN)} & 
+		\multicolumn{2}{c|}{ 3 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice TP} & 
+		\multicolumn{2}{c|}{ 578 } &
+		\multicolumn{2}{|r|}{Time-slice FP} & 
+		\multicolumn{2}{c|}{ 0 } \\ 
+		\multicolumn{2}{|r|}{Time-slice FN} & 
+		\multicolumn{2}{c|}{ 16 } &
+		\multicolumn{2}{|r|}{Time-slice TN} & 
+		\multicolumn{2}{c|}{ 594 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+		\multicolumn{2}{c|}{ 0.973063973 } &
+		\multicolumn{2}{|r|}{Sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice specificity} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{Specificity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice PPV} & 
+		\multicolumn{2}{c|}{ 1 } &
+		\multicolumn{2}{|r|}{PPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice NPV} & 
+		\multicolumn{2}{c|}{ 0.973770492 } &
+		\multicolumn{2}{|r|}{NPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ \hline
 	\end{tabular}
 }
 \label{table:tests_7}
@@ -615,15 +895,55 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 	\begin{tabular}{ | c | c | c | c | c | c | c | c | }
 		\hline
 		patient & $Y_i$ & $N_{hc}$ & $N_p$ & $C_{i,t} (\%)$ & $P_i$ & $\hat{Y}_i$ & $C_i (\%)$ \\  \hline
-		CTL09 & HC & 25  & 173 & 12.63 &  0.1263 &  P  & 0 \\
+		CTL09 & HC & 102 & 96  & 51.51 &  0.5151 & HC  & 100 \\
 		CTL12 & HC & 122 &  76  & 61.62 & 0.6162 & HC & 100 \\
 		CTL06 & HC & 198 &   0  &  100   &    1       & HC & 100 \\
 		ODP09 & P  &   0   & 198 &  100   &    0       &  P  & 100 \\
 		ODP12 &  P  &   2   & 196 & 98.99 & 0.0101 &  P  & 100 \\
 		ODP06 & P  &   0   & 198 &  100   &    0       &  P  & 100 \\ \hline
-		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 78.87 &
-		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 83.33 \\
-		\hline
+		\multicolumn{4}{|r|}{$\overline{C_{i,t}}$} & 85.35 &
+		\multicolumn{2}{|r|}{$\overline{C_{i}}$} & 100 \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{True positive (TP)} & 
+		\multicolumn{2}{c|}{ 3 } &
+		\multicolumn{2}{|r|}{False positive (FP)} & 
+		\multicolumn{2}{c|}{ 0 } \\ 
+		\multicolumn{2}{|r|}{False negative (FN)} & 
+		\multicolumn{2}{c|}{ 0 } &
+		\multicolumn{2}{|r|}{True negative (TN)} & 
+		\multicolumn{2}{c|}{ 3 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice TP} & 
+		\multicolumn{2}{c|}{ 422 } &
+		\multicolumn{2}{|r|}{Time-slice FP} & 
+		\multicolumn{2}{c|}{ 2 } \\ 
+		\multicolumn{2}{|r|}{Time-slice FN} & 
+		\multicolumn{2}{c|}{ 172 } &
+		\multicolumn{2}{|r|}{Time-slice TN} & 
+		\multicolumn{2}{c|}{ 592 }  \\
+		\hline \hline
+		
+		\multicolumn{2}{|r|}{Time-slice sensitivity} & 
+		\multicolumn{2}{c|}{ 0.71043771 } &
+		\multicolumn{2}{|r|}{Sensitivity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice specificity} & 
+		\multicolumn{2}{c|}{ 0.996632997 } &
+		\multicolumn{2}{|r|}{Specificity} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice PPV} & 
+		\multicolumn{2}{c|}{ 0.995283019 } &
+		\multicolumn{2}{|r|}{PPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ 
+		
+		\multicolumn{2}{|r|}{Time-slice NPV} & 
+		\multicolumn{2}{c|}{ 0.77486911 } &
+		\multicolumn{2}{|r|}{NPV} & 
+		\multicolumn{2}{c|}{ 1 } \\ \hline
 	\end{tabular}
 }
 \label{table:tests_8}
@@ -637,6 +957,17 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 
 
 
+
+
+
+
+
+
+
+
+
+\section{Discussion}
+\label{section:discussion}
 
 
 
