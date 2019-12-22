@@ -1007,6 +1007,19 @@ In conclusion, fMRI data contains a lot of both temporal and spatial information
 
 
 
+\section{Limitations and future directions}
+\label{section:future}
+It is really difficult to make comparisons among different automatic classification approaches of diseases, as there are several limitations and considerations associated with these studies. Factors such as fMRI scanner parameters, study size, type of classifier, nature of extracted features, medication and disease severity in the patient groups affect the classification framework. Also, without standard training and testing datasets, a comparison of different approaches based only on the classification accuracy becomes vague and highly ambiguous.
+
+If we want to use this model to diagnose different diseases, we need to train several networks because a patient can suffer from two diseases at the same time and the proposed method will give a probability of how healthy a patient is, which is bounded in the context of a specific disease. Subsequently, if our networks have been trained with various input data, the chance of having models with different input sizes is so high. Thus, we need to find a proper way to standardize inputs before using them.
+
+
+
+
+
+
+
+
 
 
 
