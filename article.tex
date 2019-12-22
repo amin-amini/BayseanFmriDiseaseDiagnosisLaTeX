@@ -956,10 +956,22 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 
 
 
+Also we tested two other methods for comparison, First Sarraf and Tofighi's method \cite{Sarraf2016} which had been described in the beginning of Section \ref{section:proposedMethod} which required a powerful GPU for calculations, had a lot of small assumptions about the data but faced overfitting in all 4 different experiments (Accuracies: [$66.67\%$ , $50\%$ , $50\%$ , $16.67\%$]). Second method is a SVM based method proposed by Rashid et al \cite{Rashid2016} for classification of schizophrenia and bipolar patients based on functional network connectivities. This method takes some assumptions about the data and is not easily expandable to other diseases but I tried it as a competitor (Accuracies: [$83.33\%$ , $66.67\%$ , $66.67\%$ , $16.67\%$]). The comparison can be seen in Table \ref{table:comparison}.
 
 
 
-
+\begin{table}
+	\caption{Comparison of the proposed method with 2 other rivals}
+	\begin{tabular}{| c | c | c | c | }
+		\hline
+		Method & \shortstack{Average \\ accuracy (\%)} & \shortstack{Average \\ time (min)} & \shortstack{Test \\ hardware} \\ \hline
+		
+		Proposed Method & 97.92 & 72.06 & GPU \tiny{(GTX1080)} \\
+		Sarraf and Tofighi & 45.83 & 407.6 & CPU \tiny{(Intel4710HQ)} \\
+		Rashid et al.          & 58.33 & 23.13 & CPU \tiny{(Intel4710HQ)} \\ \hline
+	\end{tabular}
+	\label{table:comparison}
+\end{table}
 
 
 
@@ -973,7 +985,7 @@ Our results suggest that the classification of Parkinson’s disease patients us
 
 Test results show the method did not face overfitting thanks to the dropout layers. As discussed in Section \ref{section:bayesianDL}, our network is a Bayesian 3D CNN that can learn from a small amount of data without memorizing them, just like other Bayesian networks. Experiment 3 is the only test that our model failed to predict the health status of samples precisely and did 1 mistake. However, our model did not overfit hugely, it just could not solve the problem acceptably, and if we take a look at Figure \ref{fig:tests_3}, it is obvious that the validation accuracy is less than $80\%$. As a result, the proposed method can train with low calculation costs and the trained model is reliable based on experiments.
 
-
+Without
 
 
 
