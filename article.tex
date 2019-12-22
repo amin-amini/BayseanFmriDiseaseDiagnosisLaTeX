@@ -309,7 +309,7 @@ Now we can start to train our model based on the proposed architecture which is 
 		
 		\STATE ${P_{i}} \gets {N_{i,hc} \over T_{(=198)}}$
 		
-		\IF {$ P_{i} \geq 0.5$}
+		\IF {$ P_{i} \geq 0.5$} \label{alg:proposedMethod:threshold}
 		\STATE $\hat{Y}_i \gets \;$ Healthy Control
 		\ELSE
 		\STATE $\hat{Y}_i \gets \;$ Parkinson's
@@ -962,6 +962,7 @@ Also we tested two other methods for comparison, First Sarraf and Tofighi's meth
 
 \begin{table}
 	\caption{Comparison of the proposed method with 2 other rivals}
+	\resizebox{\linewidth}{!}{%
 	\begin{tabular}{| c | c | c | c | }
 		\hline
 		Method & \shortstack{Average \\ accuracy (\%)} & \shortstack{Average \\ time (min)} & \shortstack{Test \\ hardware} \\ \hline
@@ -970,6 +971,7 @@ Also we tested two other methods for comparison, First Sarraf and Tofighi's meth
 		Sarraf and Tofighi & 45.83 & 407.6 & GPU \tiny{(GTX1080)} \\
 		Rashid et al.          & 58.33 & 23.13 & CPU \tiny{(Intel4710HQ)} \\ \hline
 	\end{tabular}
+}
 	\label{table:comparison}
 \end{table}
 
@@ -985,7 +987,11 @@ Our results suggest that the classification of Parkinson’s disease patients us
 
 Test results show the method did not face overfitting thanks to the dropout layers. As discussed in Section \ref{section:bayesianDL}, our network is a Bayesian 3D CNN that can learn from a small amount of data without memorizing them, just like other Bayesian networks. Experiment 3 is the only test that our model failed to predict the health status of samples precisely and did 1 mistake. However, our model did not overfit hugely, it just could not solve the problem acceptably, and if we take a look at Figure \ref{fig:tests_3}, it is obvious that the validation accuracy is less than $80\%$. As a result, the proposed method can train with low calculation costs and the trained model is reliable based on experiments.
 
-Without
+The proposed method has shown better results in Parkinson's disease diagnosis task compared to two other methods which can be seen in Table \ref{table:comparison}. However, Rashid et al. SVM based method is approximately 3 times faster and in case of time efficiency and speed, it seems far better. On the other hand, Sarraf and Tofighi's method demands a powerful processing unit alongside a huge amount of time. Finally, the proposed method is the most accurate undoubtedly and can solve the problem in a reasonable time.
+
+We can change, tune and improve a lot of factors from Algorithm \ref{alg:proposedMethod}. First of all, the threshold of healthiness at line~\ref{alg:proposedMethod:threshold} can change to any other number instead of $0.5$, which may require advice from a consultant or a doctor. Also, dropout probabilities are important and somehow hard to find any rule for them. We did some experiments and mentioned probabilities were good enough to solve the problem. In addition to that, it is possible to change network architecture by manipulating parameters such as the number of filters and the size of kernels in pooling and convolution layers.
+
+
 
 
 
