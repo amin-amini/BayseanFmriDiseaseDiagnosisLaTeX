@@ -408,13 +408,13 @@ Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can
 \label{table:averageAccuracies}
 \end{table}
 
-As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy, which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models. 
+As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy, which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models. Experiment results can be seen in Tables \ref{table:tests_1} to \ref{table:tests_8} and Figures \ref{fig:tests_1} to  \ref{fig:tests_8}.
 
 
 
 
 \begin{table}
-	\caption{Test results for experiment 1. HC stands for Health Control while P means Parkinson's disease}
+	\caption{Test results for experiment 1. HC (Positive) stands for Health Control while P (Negative) means Parkinson's disease.}
 	\resizebox{\linewidth}{!}{%
 		\begin{tabular}{ | c | c | c | c | c | c | c | c | }
 			\hline
@@ -969,6 +969,9 @@ As we can see, the proposed method has shown huge success in the task of Parkins
 \section{Discussion}
 \label{section:discussion}
 
+Our results suggest that the classification of Parkinson’s disease patients using fMRI data can be done accurately without taking time-based information in calculations. Also, this is supported by statistics such as Accuracy, Sensitivity, Specificity, Positive and Negative Predictive Values. Moreover, it is obvious that predictions using only one time-slice can be very powerful and enables us to obtain a probability of how healthy a patient is. On the other hand, this method does not require to omit any time-slices from scans to unify them, unlike other methods that use this approach to find functional network connectivities. Additionally, the proposed method does not make any assumptions based on any information, and it might be able to be used to classify other diseases as well.
+
+Test results show the method did not face overfitting thanks to the dropout layers. As discussed in Section \ref{section:bayesianDL}, our network is a Bayesian 3D CNN that can learn from a small amount of data without memorizing them, just like other Bayesian networks. Experiment 3 is the only test that our model failed to predict the health status of samples precisely and did 1 mistake. However, our model did not overfit hugely, it just could not solve the problem acceptably, and if we take a look at Figure \ref{fig:tests_3}, it is obvious that the validation accuracy is less than $80\%$. As a result, the proposed method can train with low calculation costs and the trained model is reliable based on experiments.
 
 
 
