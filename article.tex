@@ -152,7 +152,9 @@ b_{ij} +  \\
 Since fMRI images are 3D time series and our experiment tries to find out if images contain any useful information despite their sequences, three dimensional CNN can be used as our computational core. A simple 3D CNN can be seen in Figure \ref{fig:CnnSample}
 
 \begin{figure*}
+	\begin{center}
 	\includegraphics[width=0.8\linewidth]{images/3dCnn}
+	\end{center}
 	\caption{3D CNN demonstration (kernel size = 3$\times$3$\times$3).}
 	\label{fig:CnnSample}
 \end{figure*}
@@ -991,7 +993,9 @@ The proposed method has shown better results in Parkinson's disease diagnosis ta
 
 We can change, tune and improve a lot of factors from Algorithm \ref{alg:proposedMethod}. First of all, the threshold of healthiness at line~\ref{alg:proposedMethod:threshold} can change to any other number instead of $0.5$, which may require advice from a consultant or a doctor. Also, dropout probabilities are important and somehow hard to find any rule for them. We did some experiments and mentioned probabilities were good enough to solve the problem. In addition to that, it is possible to change network architecture by manipulating parameters such as the number of filters and the size of kernels in pooling and convolution layers.
 
+Figures \ref{fig:tests_1} to \ref{fig:tests_8} show different diagrams of loss and accuracy compared to normal CNNs. This behavior is the result of using dropouts which prevent gradient descent to smoothly decrease loss \cite{Gal2016}. These smooth steps can be seen in small parts of the diagram but not in the whole diagram. As we add dropout layers, gradient descent tries to minimize the loss of the training. As long as the dropout layers stay the same, everything works as expected. However, as the dropout layers vary, the loss changes dramatically and as a result, the loss diagram becomes noisy.
 
+In conclusion, fMRI data contains a lot of both temporal and spatial information and we can take advantage of them if we find proper models. Our proposed method can classify patients based on spatial information only and does not use any kind of time based models or temporal data. Also, our research verifies that each fMRI time-slice contains enough information to diagnose diseases and is acceptably accurate.
 
 
 
