@@ -1013,7 +1013,7 @@ It is really difficult to make comparisons among different automatic classificat
 
 If we want to use this model to diagnose different diseases, we need to train several networks because a patient can suffer from two diseases at the same time and the proposed method will give a probability of how healthy a patient is, which is bounded in the context of a specific disease. Subsequently, if our networks have been trained with various input data, the chance of having models with different input sizes is so high. Thus, we need to find a proper way to standardize inputs before using them.
 
-
+Our approach has some bias as the whole dataset was obtained from one center and was pre-processed together in the beginning. To resolve this issue, we can try to examine the proposed method on a bigger dataset consisted of different scans obtained using different instruments.
 
 
 
