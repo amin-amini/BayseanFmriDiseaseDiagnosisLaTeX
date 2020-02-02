@@ -119,6 +119,9 @@ The rest of this paper is organized as follows. Participant and dataset informat
 
 
 \section{Materials and methods}
+
+In this section, first, we introduce the used dataset and data acquisition and then, we take a look at required pre-processing steps to unify the scans. Subsequently, basic tools and models, such as three-dimensional convolutional neural networks (3D CNN) and Bayesian deep learning, will be discussed. Finally, we will comprehensively describe the proposed method.
+
 \label{section:materials}
 
 
@@ -141,7 +144,7 @@ The fMRI data were pre-processed using the standard modules of FMRIB Software Li
 
 
 
-\subsection{Three dimensional convolutional neural networks}
+\subsection{Three-dimensional convolutional neural networks}
 \label{section:3dCnn}
 3D Convolutional Neural Networks which are inspired by human visual system are similar to classic neural networks. This architecture has been particularly designed based on the explicit assumption that raw data are three-dimensional that enables us to encode certain properties and also to reduce the amount of hyper parameters. The CNN topology utilizes spatial relationships to reduce the number of parameters which must be learned and thus improves upon general feed-forward back propagation training. Equation \eqref{eq:CnnVal} shows how value of each voxel is calculated from previous layer based on a fixed kernel \texttt{(size = P$\times$Q$\times$R)} and a bias for \texttt{j}th feature in \texttt{i}th layers where v is value, f is the activation function and w is filter weight \cite{Ji2013}.
 
