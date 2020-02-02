@@ -146,7 +146,8 @@ The fMRI data were pre-processed using the standard modules of FMRIB Software Li
 
 \subsection{Three-dimensional convolutional neural networks}
 \label{section:3dCnn}
-3D Convolutional Neural Networks which are inspired by human visual system are similar to classic neural networks. This architecture has been particularly designed based on the explicit assumption that raw data are three-dimensional that enables us to encode certain properties and also to reduce the amount of hyper parameters. The CNN topology utilizes spatial relationships to reduce the number of parameters which must be learned and thus improves upon general feed-forward back propagation training. Equation \eqref{eq:CnnVal} shows how value of each voxel is calculated from previous layer based on a fixed kernel \texttt{(size = P$\times$Q$\times$R)} and a bias for \texttt{j}th feature in \texttt{i}th layers where v is value, f is the activation function and w is filter weight \cite{Ji2013}.
+3D Convolutional Neural Networks which are inspired by human visual system are similar to classic neural networks. This architecture has been particularly designed based on the explicit assumption that raw data are three-dimensional that enables us to encode certain properties and also to reduce the amount of hyper parameters. The 3D CNN topology utilizes spatial relationships to reduce the number of parameters which must be learned and thus improves upon general feed-forward back propagation training. Figure \ref{fig:CnnSample} demonstrate the 3D CNN architecture and equation \eqref{eq:CnnVal} shows how value of each voxel is calculated from previous layer based on a fixed kernel \texttt{(size = P$\times$Q$\times$R)} and a bias ($b_{ij}$); where $v^{ xyz }_{ ij }$ is the value of an unit at position ($x,y,z$) in the  \texttt{j}th feature map in the \texttt{i}th layers where $f$ is the activation function, $m$ indexes over the set of
+feature maps in the $(i-1)$th layer connected to the current feature map $w^{pqr}_{ijm}$ is the value at the position $(p,q,r)$ of the kernel connected to the $m$th feature map, and $P_i$, $Q_i$ and $R_i$ are the height, width and depth of the kernel, respectively \cite{Ji2013}.
 
 \begin{equation}
 v^{ xyz }_{ ij } = \\
@@ -161,7 +162,7 @@ b_{ij} +  \\
 ) \label{eq:CnnVal} 
 \end{equation}
 
-Since fMRI images are 3D time series and our experiment tries to find out if images contain any useful information despite their sequences, three dimensional CNN can be used as our computational core. A simple 3D CNN can be seen in Figure \ref{fig:CnnSample}
+Since fMRI images are 3D time series and our experiment tries to find out if images contain any useful information despite their sequences, three dimensional CNN can be used as our computational core. A simple 3D CNN can be seen in Figure \ref{fig:CnnSample}.
 
 \begin{figure*}
 	\begin{center}
