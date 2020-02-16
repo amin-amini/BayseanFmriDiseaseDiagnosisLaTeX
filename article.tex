@@ -18,7 +18,8 @@
 %% double column output.
 
 %\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
-\documentclass[a4paper,fleqn]{cas-dc}
+%\documentclass[a4paper,fleqn]{cas-dc}
+\documentclass[preprint,12pt]{elsarticle}
 
 %\usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
@@ -43,33 +44,38 @@
 \usepackage{siunitx}
 %\usepackage{mathpazo}
 
+\usepackage{lipsum}
+\usepackage[modulo]{lineno}
+\usepackage{fnlineno}
+
 \input{mymacros.tex}
 
 \begin{document}
 \let\WriteBookmarks\relax
 \def\floatpagepagefraction{1}
 \def\textpagefraction{.001}
-\shorttitle{Classification of Parkinson's disease patients using Bayesian deep learning based on fMRI data}
-\shortauthors{Amin Amini, Mayam Amirmazlaghani}
+%\shorttitle{Classification of Parkinson's disease patients using Bayesian deep learning based on fMRI data}
+%\shortauthors{Amin Amini, Mayam Amirmazlaghani}
 
-\title [mode = title]{Classification of Parkinson's disease patients using Bayesian deep learning based on fMRI data}
+
+\title{Classification of Parkinson's disease patients using Bayesian deep learning based on fMRI data}
 
 
 
 \author[1]{Amin Amini}
 \ead{amin-amini@aut.ac.ir}
 
-\credit{Conceptualization of this study, Methodology, Software}
+%\credit{Conceptualization of this study, Methodology, Software}
 
 \author[1]{Maryam Amirmazlaghani}
-\cormark[1]
+%\cormark[1]
 \ead{mazlaghani@aut.ac.ir}
 
 
 \address[1]{Department of Computer Engineering and Information Technology, Amirkabir University of Technology, Tehran, Iran}
 
 
-\cortext[cor1]{Corresponding author}
+%\cortext[cor1]{Corresponding author}
 
 \begin{abstract}
 The goal of resting-state functional magnetic resonance imaging (fMRI) is to investigate the brain's functional connections by using the temporal similarity between blood oxygenation level-dependent (BOLD) signals in different regions of the brain “at rest” as an indicator of synchronous neural activity.
@@ -91,17 +97,19 @@ Then to determine if a person is suffering from Parkinson's or not, we test his/
 %\item Research highlights item 3
 %\end{highlights}
 
-\begin{keywords}
+\begin{keyword}
 Functional magnetic resonance imaging (fMRI) \sep
 Resting-state \sep
 Disease diagnosis \sep
 Bayesian deep learning \sep
 Convolutional neural network (CNN) \sep
 Parkinson's disease
-\end{keywords}
+\end{keyword}
 
 
 \maketitle
+
+\linenumbers
 
 \section{Introduction}
 
@@ -232,7 +240,7 @@ given some probabilities $p_i$ and matrices $M_i$ as variational parameters. The
 \label{section:proposedMethod}
 As mentioned before, our experiment aims to find out if fMRI scans carry any hidden information without taking time-based sequences in action. Accordingly, we examined some previous researches in this field and an eye-catching example of this glance is Sarraf and Tofighi's adopted LeNet-5 architecture \cite{Sarraf2016}. Their algorithm concatenates fMRI images based on depth ($z$) and time ($t$) axis and does not make any assumptions about the disease or the data (except their unknown patient selection criteria), making it a potential applicable solution to different disease diagnosis tasks. In brief, each patient's scan is presented as a huge two-dimensional matrix which is then fed to a CNN network. Although this method has shown huge success in the case of Alzheimer's (based on large ADNI dataset), our experiments clarify that it is not suitable for Parkinson's disease diagnosis with a small dataset (such as OpenfMRI ds000245). In addition to that, Sarraf and Tofighi's method consumes a huge amount of memory and demands a powerful processor due to its large dimensions of data.
 
-Without a doubt, fMRI scans are nothing but spatial and temporal connectivities. As we aim to focus on spatial relations and put temporal ones aside, our algorithm must try to keep all of that information in calculations. Besides, Sarraf and Tofighi's method loses a lot of these connectivities by flattening data toward the $z$ axis. In addition to that, the mentioned data conversion will increase the model complexity and variance, especially in a case like Parkinson's disease dataset. In fact, by resizing 198 slices of $39 \times 64 \times 64$ voxels to a 2D $2496 \times 12672$ pixels, we are adding a lot of unnecessarily and incorrect spatial connectivities based on the $t$ axis and losing some important ones in the $z$ axis by misplacing them. As a result, it is predictable that flattening algorithm may lead to overfitting and compute-intensive calculations which can be seen in Figure \ref{fig:SarrafParkinsonTestResult}. This experiment ran for 5 epochs (same as the article itself) on an NVIDIA\textsuperscript{\tiny\textregistered} GTX1080 and took $33h \; 55m \; 36s$ \tiny{($=6h \; 47m \; 7s$ for each epoch)}. From this experiment, we can easily observe the overfitting as the validation accuracy goes up and down alternatively, and the network is not able to improve the accuracy. Additionally, if we take a look at the loss diagram, we will find out that after the first epoch (which is highlighted by dots in the diagrams), no sensible change is happening to both parameters. Also, it worth mentioning that the model is trying to escape the regional optimum by increasing the loss of the training data while it faces no success.
+Without a doubt, fMRI scans are nothing but spatial and temporal connectivities. As we aim to focus on spatial relations and put temporal ones aside, our algorithm must try to keep all of that information in calculations. Besides, Sarraf and Tofighi's method loses a lot of these connectivities by flattening data toward the $z$ axis. In addition to that, the mentioned data conversion will increase the model complexity and variance, especially in a case like Parkinson's disease dataset. In fact, by resizing 198 slices of $39 \times 64 \times 64$ voxels to a 2D $2496 \times 12672$ pixels, we are adding a lot of unnecessarily and incorrect spatial connectivities based on the $t$ axis and losing some important ones in the $z$ axis by misplacing them. As a result, it is predictable that flattening algorithm may lead to overfitting and compute-intensive calculations which can be seen in Figure \ref{fig:SarrafParkinsonTestResult}. This experiment ran for 5 epochs (same as the article itself) on an NVIDIA\textsuperscript{\tiny\textregistered} GTX1080 and took $33h \; 55m \; 36s$ {\tiny{($=6h \; 47m \; 7s$ for each epoch)}}. From this experiment, we can easily observe the overfitting as the validation accuracy goes up and down alternatively, and the network is not able to improve the accuracy. Additionally, if we take a look at the loss diagram, we will find out that after the first epoch (which is highlighted by dots in the diagrams), no sensible change is happening to both parameters. Also, it worth mentioning that the model is trying to escape the regional optimum by increasing the loss of the training data while it faces no success.
 
 
 \begin{figure*}
@@ -983,9 +991,9 @@ Also we tested two other methods for comparison, First Sarraf and Tofighi's meth
 		\hline
 		Method & \shortstack{Average \\ accuracy (\%)} & \shortstack{Average \\ time (min)} & \shortstack{Test \\ hardware} \\ \hline
 		
-		Proposed Method & 97.92 & 72.06 & CPU \tiny{(Intel4710HQ)} \\
-		Sarraf and Tofighi & 45.83 & 407.6 & GPU \tiny{(GTX1080)} \\
-		Rashid et al.          & 58.33 & 23.13 & CPU \tiny{(Intel4710HQ)} \\ \hline
+		Proposed Method & 97.92 & 72.06 & CPU {\tiny{(Intel4710HQ)}} \\
+		Sarraf and Tofighi & 45.83 & 407.6 & GPU {\tiny{(GTX1080)}} \\
+		Rashid et al.          & 58.33 & 23.13 & CPU {\tiny{(Intel4710HQ)}} \\ \hline
 	\end{tabular}
 }
 	\label{table:comparison}
@@ -1044,7 +1052,8 @@ In this study, we showed that spatial information is powerful enough to diagnose
 
 
 \begin{figure}
-	\includegraphics[width=\linewidth]{images/cnnArch}
+	\centering
+	\includegraphics[scale=.6]{images/cnnArch}
 	\caption{Proposed Bayesian 3D CNN architecture}
 	\label{fig:cnnArch}
 \end{figure}
@@ -1058,7 +1067,7 @@ In this study, we showed that spatial information is powerful enough to diagnose
 %author credit taxonomy contribution roles tagged using \verb+\credit+ 
 %in frontmatter.
 
-\printcredits
+%\printcredits
 
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
