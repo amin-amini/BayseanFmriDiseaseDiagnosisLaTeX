@@ -245,7 +245,7 @@ Without a doubt, fMRI scans are nothing but spatial and temporal connectivities.
 
 \begin{figure*}
 	\includegraphics[width=\linewidth]{images/SarrafParkinsonTestResult}
-	\caption{Parkinson's disease diagnosis accuracy and loss using Sarraf and Tofighi's algorithm.}
+	\caption{Parkinson's disease diagnosis accuracy and loss using Sarraf and Tofighi's algorithm. Transparent graphs show practical values and opaque graphs are the result of Linear Smoothing ($\alpha = 0.7$)}
 	\label{fig:SarrafParkinsonTestResult}
 \end{figure*}
 
@@ -423,7 +423,7 @@ Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can
 \label{table:averageAccuracies}
 \end{table}
 
-As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy, which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models. Experiment results can be seen in Tables \ref{table:tests_1} to \ref{table:tests_8} and Figures \ref{fig:tests_1} to  \ref{fig:tests_8}.
+As we can see, the proposed method has shown huge success in the task of Parkinson's disease diagnosis in an affordable time. Also, the fascinating point about the experiments is the average mean time-slice accuracy, which is around $92.96\%$. Accordingly, it means the model is able to judge only by a single time-slice of the brain while the prediction is acceptably accurate. We mostly care about the average mean accuracy, which is the average accuracy of the disease diagnosis task and as long as the whole process can predict someone's health situation precisely, we can ignore the time-slice based results. So, we should mostly focus on average mean accuracy and use that to compare the proposed method to other models. Experiment results can be seen in Tables \ref{table:tests_1} to \ref{table:tests_8} and Figures \ref{fig:tests_1} to  \ref{fig:tests_8}. Transparent graphs show practical values and opaque graphs are the result of Linear Smoothing ($\alpha = 0.7$)
 
 Test results suggest that the algorithm can classify Parkinson's patients precisely while avoiding overfitting. The approach of investigating time-slices separately has made our model faster and gave us the ability to distinguish patients from healthy controls more accurately. In addition to that, the proposed method was able to give a prediction about Parkinson's disease by a single time-slice while being $93.77\%$ correct. Moreover, the combination of all time-slices together enabled us to improve accuracy to $97.92\%$. Other criterias such as Sensitivity, Specificity, Positive and negative predictive values are acceptably high and the only wrong prediction can be seen in Test 3 (Table \ref{table:tests_3}).
 
@@ -490,7 +490,7 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 \end{table}
 \begin{figure}
 	\includegraphics[width=\linewidth]{images/tests_1}
-	\caption{Experiment 1. Accuracy and loss of network for training and validation data. Accuracy is based on validation data and loss diagram contains train data loss in blue and validation loss in orange.}
+	\caption{Experiment 1. Accuracy and loss of network for training and validation data. Accuracy is based on validation data and loss diagram contains train data loss in blue and validation loss in orange. Transparent graphs show practical values and opaque graphs are the result of Linear Smoothing ($\alpha = 0.7$)}
 	\label{fig:tests_1}
 \end{figure}
 
