@@ -29,7 +29,7 @@
 
 \usepackage{hyperref}
 
-\usepackage{algorithm2e}
+\usepackage[ruled,vlined]{algorithm2e}
 \usepackage[noend]{algcompatible}
 
 \newcommand{\algorithmicinput}{\textbf{input}}
@@ -47,6 +47,7 @@
 \usepackage{lipsum}
 \usepackage[modulo]{lineno}
 \usepackage{fnlineno}
+\usepackage{listings}
 
 \input{mymacros.tex}
 
@@ -257,32 +258,22 @@ As we meant to put temporal data aside, we can assume that the fMRI data for eac
 
 First of all, input data will be preprocessed using Algorithm \ref{alg:preprocessing}, which removes noises and non-informational data parts (such as the skull). In addition to that, each patient's scan will be normalized to a standard space that boosts the learning phase's efficiency. This step is followed by dividing each sample (containing $t$ 3D fMRI time-slices) to $t$ different images. For instance, in Parkinson's dataset, 30 samples consisted of 198 time-slices of \texttt{$39 \times 64 \times 64$} voxels will turn into $5940$ 3D images. We convert these data to TFRECORD format to improve performance. Furthermore, for each experiment, six participants ($20\%$ of all data) from both groups are randomly selected, and their $t$ time-slices are set aside for the test phase. On the other hand, the rest of the data (which are $24 \times 198$ labeled time-slices) will be shuffled and fed to our 3D deep Bayesian convolutional neural network. We use the first 159 time-slices ($80\%$) as training samples while the remnants will be our validation portion of data correspondingly. 
 
-\begin{algorithm*}
+
+\begin{algorithm}
 	\caption{Data preparation}
 	\label{alg:preprocessing}
-	\begin{algorithmic}
+	
+	\begin{algorithmic}[1]
+		
 		\INPUT{raw fMRI images}
-		\STATE 
-		\STATE For each fMRI scan following pre-processing steps had been done.
-		\STATE 
-		
-		\item{\textbf{1.}} Intra-modal motion correction using \textbf{MCFLIRT}. it loads the time-series in its entirity and will default to the middle volume as an initial template image. A coarse 8mm search for the motion parameters is then carried out using the cost function specified followed by two subsequent searches at 4mm using increasingly tighter tolerances. All optimizations use trilinear interpolation.
-		\STATE 
-		
-		\item{\textbf{2.}} \textbf{Skull stripping} using BET. Brain Extraction Tool deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1 and T2 input images.
-		\STATE 
-		
-		\item{\textbf{3.}} \textbf{Spatial Smoothing} via Full-Width at half maximum (FWHM) with 5mm range which is carried out on each volume of the FMRI data set separately. This is intended to reduce noise without reducing valid activation; this is successful as long as the underlying activation area is larger than the extent of the smoothing.
-		\STATE 
-		
-		\item{\textbf{4.}} \textbf{Highpass temporal filtering} uses a local fit of a straight line (Gaussian-weighted within the line to give a smooth response) to remove low frequency artifacts. Low level noises were removed using this filter with $t = 90 sec$.
-		\STATE 
-		
-		\item{\textbf{5.}} The functional images were then aligned to the individual's high-resolution T1-weighted scans, which were subsequently registered to the \textbf{Montreal Neurological Institute standard space (MNI152)} using affine linear registration and resampled at 2mm cubic voxels
-		\STATE 
-
+		\STATE Intra-modal motion correction using \textbf{MCFLIRT}. it loads the time-series in its entirity and will default to the middle volume as an initial template image. A coarse 8mm search for the motion parameters is then carried out using the cost function specified followed by two subsequent searches at 4mm using increasingly tighter tolerances. All optimizations use trilinear interpolation.
+		\STATE \textbf{Skull stripping} using BET. Brain Extraction Tool deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1 and T2 input images.
+		\STATE \textbf{Spatial Smoothing} via Full-Width at half maximum (FWHM) with 5mm range which is carried out on each volume of the FMRI data set separately. This is intended to reduce noise without reducing valid activation; this is successful as long as the underlying activation area is larger than the extent of the smoothing.
+		\STATE \textbf{Highpass temporal filtering} uses a local fit of a straight line (Gaussian-weighted within the line to give a smooth response) to remove low frequency artifacts. Low level noises were removed using this filter with $t = 90 sec$.
+		\STATE The functional images were then aligned to the individual's high-resolution T1-weighted scans, which were subsequently registered to the \textbf{Montreal Neurological Institute standard space (MNI152)} using affine linear registration and resampled at 2mm cubic voxels
 	\end{algorithmic}
-\end{algorithm*}
+\end{algorithm}
+
 
 
 Now we can start to train our model based on the proposed architecture which is illustrated in Figure \ref{fig:cnnArch}. During the training phase, data gets split to 50 chunks ($95$ samples) which are fed sequentially to the network. Consequently, the model can be validated during the training to prevent overfitting and enables us to track the whole process. The proposed method can be briefly expressed as Algorithm \ref{alg:proposedMethod} which $N_{i,p}$ indicates the number of predictions that instance $i$ is a Parkinson's patient and $N_{i,hc}$ indicates a Healthy Control. $\hat{Y}_{i,t}$ is the network prediction for $t$'th time-slice of sample $i$ whilst $Y_i$ is the real class and $C_{i,t}$ is the correctness of that output. Finally, $P_i$ is the predicted probability of how healthy a patient is, $\hat{Y}_i$ is the class based on $P_i$ and $C_i$ is the correctness of that prediction.
@@ -414,6 +405,7 @@ Table \ref{table:averageAccuracies} shows a summary of 8 different tests. We can
 
 \begin{table}
 	\caption{Average accuracies for different tests}
+	\centering
 	\begin{tabular}{| c | c | c| }
 		\hline
 		$j$ & $\overline{C_{i,t}}\;(\%)$ & $\overline{C_i}\;(\%)$ \\ 
