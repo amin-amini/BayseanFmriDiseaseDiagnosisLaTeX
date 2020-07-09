@@ -79,15 +79,14 @@
 %\cortext[cor1]{Corresponding author}
 
 \begin{abstract}
-The goal of resting-state fMRI is to investigate the brain's functional connections in different regions of the brain as an indicator of synchronous neural activity.
-However having different images of patients' brains regardless of the sequential time-based information, may contain enough data to investigate their brains.
-In this paper, we propose a novel method to automatically extract this non-time sequence-based information using a Bayesian deep learning algorithm based on a convolutional neural network (CNN).
-Instead of using some predefined points of interest (POIs), we use the whole data in the training phase so those points of the brain which do not contain related information about the disease will be ignored automatically by the trained model.
+The goal of resting-state fMRI is to investigate the brain's functional connections as an indicator of synchronous neural activity.
+However different images of patients' brains regardless of time-based information, may contain enough data to investigate their brains.
+We propose a novel method to automatically extract non-time sequence-based information using a Bayesian deep learning algorithm based on a convolutional neural network.
+Instead of using some predefined points of interest, we use the whole data in the training phase and those points which do not contain related information about the disease, will be ignored automatically.
 Moreover, this method does not make any assumptions about the disease, patients, etc.,
 makes it a possible universal disease diagnosis approach to differentiate diseases having an impact on brain's functionality.
-Each fMRI scan of patients will be divided into {\it t} different 3D images enabling us to make the dataset much bigger in number and calculations way simpler.
-All of these images are fed to a Bayesian network to train our model.
-Then to determine if a person is a patient, we test {\it t} fMRI slices and get {\it t} different results which leads to a fraction (probability) of how unhealthy the brain is. Experimental results confirm the efficiency of the method and its outperformance.
+Each fMRI scan of patients will be divided into {\it t} different 3D images making dataset bigger and calculations simpler.
+To determine if a person is a patient, we test {\it t} fMRI slices and get {\it t} different results which leads to a fraction (probability) of how unhealthy the brain is. Experimental results confirm the efficiency of the method and its outperformance.
 \end{abstract}
 
 
