@@ -186,13 +186,6 @@ b_{ij} +  \\
 
 Since fMRI images are 3D time series and our experiments try to find out if images contain any useful information despite their sequences, three dimensional CNN can be used as our computational core. A simple 3D CNN can be seen in Figure \ref{fig:CnnSample}.
 
-\begin{figure*}
-	\begin{center}
-	\includegraphics[width=0.8\linewidth]{images/3dCnn}
-	\end{center}
-	\caption{3D CNN demonstration (kernel size = 3$\times$3$\times$3).}
-	\label{fig:CnnSample}
-\end{figure*}
 
 
 
@@ -255,11 +248,6 @@ As mentioned before, our experiment aims to find out if fMRI scans carry any hid
 Without a doubt, fMRI scans are nothing but spatial and temporal connectivities. As we aim to focus on spatial relations and put temporal ones aside, our algorithm must try to keep all of that information in calculations. Besides, Sarraf and Tofighi's method loses a lot of these connectivities by flattening data toward the $z$ axis. In addition to that, the mentioned data conversion will increase the model complexity and variance, especially in a case like Parkinson's disease dataset. In fact, by resizing 198 slices of $39 \times 64 \times 64$ voxels to a 2D $2496 \times 12672$ pixels, we are adding a lot of unnecessarily and incorrect spatial connectivities based on the $t$ axis and losing some important ones in the $z$ axis by misplacing them. As a result, it is predictable that flattening algorithm may lead to overfitting and compute-intensive calculations which can be seen in Figure \ref{fig:SarrafParkinsonTestResult}. This experiment ran for 5 epochs (same as the article itself) on an NVIDIA\textsuperscript{\tiny\textregistered} GTX1080 and took $33h \; 55m \; 36s$ {\tiny{($=6h \; 47m \; 7s$ for each epoch)}}. From this experiment, we can easily observe the overfitting as the validation accuracy goes up and down alternatively, and the network is not able to improve the accuracy. Additionally, if we take a look at the loss diagram, we will find out that after the first epoch (which is highlighted by dots in the diagrams), no sensible change is happening to both parameters. Also, it worth mentioning that the model is trying to escape the regional optimum by increasing the loss of the training data while it faces no success.
 
 
-\begin{figure*}
-	\includegraphics[width=\linewidth]{images/SarrafParkinsonTestResult}
-	\caption{Parkinson's disease diagnosis accuracy and loss using Sarraf and Tofighi's algorithm. Transparent graphs show practical values and opaque graphs are the result of Linear Smoothing ($\alpha = 0.7$)}
-	\label{fig:SarrafParkinsonTestResult}
-\end{figure*}
 
 
 In order to conquer the mentioned downsides of a conventional CNN in Parkinson's disease diagnosis, we will introduce our method which keeps spatial information and can overcome overfitting by reducing model variance. To do so, the proposed algorithm will keep the $z$ index of data and feed them into a 3D Bayesian CNN. As discussed in Section \ref{section:bayesianDL} if we add dropouts before each convolution layer, our model will turn into a deep Bayesian convolutional neural network that can avoid overfitting. Dropouts remove some units (by setting their output values to zero) temporarily which enables other units to justify their weights. Consequently, remaining units in the training phase can precisely adjust their weights to more appropriate ranges if they already hold acceptable values, or keep away from unwanted boundaries noticeably if needed. In addition to that, Bayesian networks are dramatically less compute-intensive and can solve problems in even a single epoch. Hence, a mid-end CPU can be used instead of a high-end GPU in experiments.
@@ -378,11 +366,6 @@ Now we can start to train our model based on the proposed architecture which is 
 Furthermore, our model's accuracy can be obtained in two different aspects. The first one would be the correctness of each time-slice prediction ($\overline{C}_{T}$), while the second, is the accuracy of disease diagnosis ($\overline{C}$), and we are mostly interested in the later. Both of the mentioned statistics can be calculated using Equations \eqref{eq:meanTimeSliceCorrectness} and \eqref{eq:meanCorrectness}.
 
 
-\begin{figure*}
-	\includegraphics[width=\linewidth]{images/cnnArchHorizontal}
-	\caption{Proposed architecture}
-	\label{fig:cnnHorizontalArch}
-\end{figure*}
 
 \begin{eqnarray}
 \label{eq:meanTimeSliceCorrectness}
@@ -500,11 +483,6 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 	}
 	\label{table:tests_1}
 \end{table}
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/tests_1}
-	\caption{Experiment 1. Accuracy and loss of network for training and validation data. Accuracy is based on validation data and loss diagram contains train data loss in blue and validation loss in orange. Transparent graphs show practical values and opaque graphs are the result of Linear Smoothing ($\alpha = 0.7$)}
-	\label{fig:tests_1}
-\end{figure}
 
 
 
@@ -568,11 +546,6 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 	}
 	\label{table:tests_2}
 \end{table}
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/tests_2}
-	\caption{Experiment 2. Accuracy and loss of network for training and validation data.}
-	\label{fig:tests_2}
-\end{figure}
 
 
 
@@ -636,11 +609,7 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 }
 \label{table:tests_3}
 \end{table}
-\begin{figure}
-\includegraphics[width=\linewidth]{images/tests_3}
-\caption{Experiment 3. Accuracy and loss of network for training and validation data.}
-\label{fig:tests_3}
-\end{figure}
+
 
 
 
@@ -704,11 +673,7 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 }
 \label{table:tests_4}
 \end{table}
-\begin{figure}
-\includegraphics[width=\linewidth]{images/tests_4}
-\caption{Experiment 4. Accuracy and loss of network for training and validation data.}
-\label{fig:tests_4}
-\end{figure}
+
 
 
 
@@ -772,11 +737,7 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 }
 \label{table:tests_5}
 \end{table}
-\begin{figure}
-\includegraphics[width=\linewidth]{images/tests_5}
-\caption{Experiment 5. Accuracy and loss of network for training and validation data.}
-\label{fig:tests_5}
-\end{figure}
+
 
 
 
@@ -840,11 +801,7 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 }
 \label{table:tests_6}
 \end{table}
-\begin{figure}
-\includegraphics[width=\linewidth]{images/tests_6}
-\caption{Experiment 6. Accuracy and loss of network for training and validation data.}
-\label{fig:tests_6}
-\end{figure}
+
 
 
 
@@ -908,11 +865,7 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 }
 \label{table:tests_7}
 \end{table}
-\begin{figure}
-\includegraphics[width=\linewidth]{images/tests_7}
-\caption{Experiment 7. Accuracy and loss of network for training and validation data.}
-\label{fig:tests_7}
-\end{figure}
+
 
 
 
@@ -976,11 +929,7 @@ Test results suggest that the algorithm can classify Parkinson's patients precis
 }
 \label{table:tests_8}
 \end{table}
-\begin{figure}
-\includegraphics[width=\linewidth]{images/tests_8}
-\caption{Experiment 8. Accuracy and loss of network for training and validation data.}
-\label{fig:tests_8}
-\end{figure}
+
 
 
 
@@ -1055,12 +1004,6 @@ In this study, we showed that spatial information is powerful enough to diagnose
 
 
 
-\begin{figure}
-	\centering
-	\includegraphics[scale=.6]{images/cnnArch}
-	\caption{Proposed Bayesian 3D CNN architecture}
-	\label{fig:cnnArch}
-\end{figure}
 
 \appendix
 
@@ -1080,6 +1023,93 @@ In this study, we showed that spatial information is powerful enough to diagnose
 
 %\vskip3pt
 
+\newpage
+\captionsetup{justification=raggedright,singlelinecheck=false}
+
+
+\begin{figure}
+	%\begin{center}
+	%	\includegraphics[width=0.8\linewidth]{images/3dCnn}
+	%\end{center}
+	\caption{3D CNN demonstration (kernel size = 3$\times$3$\times$3).}
+	\label{fig:CnnSample}
+\end{figure}
+
+
+\begin{figure*}
+	%\includegraphics[width=\linewidth]{images/SarrafParkinsonTestResult}
+	\caption{Parkinson's disease diagnosis accuracy and loss using Sarraf and Tofighi's algorithm. Transparent graphs show practical values and opaque graphs are the result of Linear Smoothing ($\alpha = 0.7$)}
+	\label{fig:SarrafParkinsonTestResult}
+\end{figure*}
+
+
+\begin{figure*}
+	%\includegraphics[width=\linewidth]{images/cnnArchHorizontal}
+	\caption{Proposed architecture}
+	\label{fig:cnnHorizontalArch}
+\end{figure*}
+
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_1}
+	\caption{Experiment 1. Accuracy and loss of network for training and validation data. Accuracy is based on validation data and loss diagram contains train data loss in blue and validation loss in orange. Transparent graphs show practical values and opaque graphs are the result of Linear Smoothing ($\alpha = 0.7$)}
+	\label{fig:tests_1}
+\end{figure}
+
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_2}
+	\caption{Experiment 2. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_2}
+\end{figure}
+
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_3}
+	\caption{Experiment 3. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_3}
+\end{figure}
+
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_4}
+	\caption{Experiment 4. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_4}
+\end{figure}
+
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_5}
+	\caption{Experiment 5. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_5}
+\end{figure}
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_6}
+	\caption{Experiment 6. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_6}
+\end{figure}
+
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_7}
+	\caption{Experiment 7. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_7}
+\end{figure}
+
+\begin{figure}
+	%\includegraphics[width=\linewidth]{images/tests_8}
+	\caption{Experiment 8. Accuracy and loss of network for training and validation data.}
+	\label{fig:tests_8}
+\end{figure}
+
+
+\begin{figure}
+	%\centering
+	%\includegraphics[scale=.6]{images/cnnArch}
+	\caption{Proposed Bayesian 3D CNN architecture}
+	\label{fig:cnnArch}
+\end{figure}
 
 \end{document}
 
